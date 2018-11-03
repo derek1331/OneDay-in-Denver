@@ -30,7 +30,7 @@ class TestModal extends React.Component {
           window.location.reload();
 
           this.setState({
-            redirectTo: "/second"
+            redirectTo: "/LocalFavorites"
           });
         } else {
           console.log("Sign-up error");
@@ -74,7 +74,7 @@ class TestModal extends React.Component {
           window.location.reload();
 
           this.setState({
-            redirectTo: "/second"
+            redirectTo: "/LocalFavorites"
           });
         }
       })
