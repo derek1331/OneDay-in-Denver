@@ -81,7 +81,7 @@ class Second extends React.Component {
             if (activity.catagory === "Adventure") {
               return (
                 <div className="col s6">
-                  <CardPanel                     style={{
+                  <CardPanel      key={index}               style={{
                       padding: "24px",
                       borderTopColor: "#795548",
                       borderTopStyle: "solid",
@@ -142,7 +142,7 @@ class Second extends React.Component {
             if (activity.catagory === "Dining") {
               return (
                 <div className="col s6">
-                  <CardPanel style={{
+                  <CardPanel key={index} style={{
                       padding: "24px",
                       borderTopColor: "#795548",
                       borderTopStyle: "solid",
@@ -240,7 +240,7 @@ class Second extends React.Component {
                         <a
                           id={activity._id}
                           className="right"
-                          key={activity._id}
+                          key={activity.id}
                           onClick={this.handleChange.bind(
                             this,
                             activity._id,
