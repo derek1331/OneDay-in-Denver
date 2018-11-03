@@ -31,11 +31,10 @@ class Second extends React.Component {
             name: event.name
           }
         }).then(
-        this.setState({ liked: liked }));
+        this.setState({ 
+          liked: liked }));
         // if not found
       } else {
-        console.log(sessionStorage.getItem("user"));
-        console.log(event.name);
         axios({
           method: "put",
           url: "/api/users",
@@ -56,16 +55,6 @@ class Second extends React.Component {
     }
   }
 
-  componentDidMount() {
-    axios({
-      method: "get",
-      url: "/api/events"
-    }).then(res => {
-      const activity = res.data;
-      this.setState({ activity });
-      console.log(activity);
-    });
-  }
 
   renderMap() {}
   render() {
@@ -81,7 +70,7 @@ class Second extends React.Component {
             if (activity.catagory === "Adventure") {
               return (
                 <div className="col s6">
-                  <CardPanel      key={index}               style={{
+                  <CardPanel      key={index} style={{
                       padding: "24px",
                       borderTopColor: "#795548",
                       borderTopStyle: "solid",
