@@ -44,9 +44,7 @@ class Nav extends React.Component {
               <NavLink
                 to="/"
                 style={{ color: "#795548", fontWeight: "bold", }}
-                activeStyle={{
-                  textDecoration: "underline #795548 solid",
-                }}
+
                 onClick={this.logout}
               >
                 Logout
