@@ -1,0 +1,15 @@
+.footer {
+    background-color: darkorchid;
+    height: 60px;
+    margin-top: 10px;
+}
+
+.parallax img{
+    opacity: 100 !important;
+}
+
+.home-header{
+    position: absolute;
+    width: 100% !important;
+    margin: auto 0;
+}
