@@ -25,7 +25,7 @@ class Second extends React.Component {
           }
         }axios({
           method: "put",
-          url: "http://localhost:5000/api/delete",
+          url: "/api/delete",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name
@@ -38,7 +38,7 @@ class Second extends React.Component {
         console.log(event.name);
         axios({
           method: "put",
-          url: "http://localhost:5000/api/users",
+          url: "/api/users",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name,
@@ -59,7 +59,7 @@ class Second extends React.Component {
   componentDidMount() {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/events"
+      url: "/api/events"
     }).then(res => {
       const activity = res.data;
       this.setState({ activity });
