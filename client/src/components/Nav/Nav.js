@@ -52,7 +52,7 @@ class Nav extends React.Component {
             </ul>
             <ul className="right hide-on-med-and-down">
               <NavLink
-                to="/fourth"
+                to="/Itinerary"
                 style={{ color: "#795548",
                 fontWeight: "bold", }}
                 activeStyle={{
@@ -64,7 +64,7 @@ class Nav extends React.Component {
             </ul>
             <ul className="right hide-on-med-and-down">
               <NavLink
-                to="/third"
+                to="/Meetups"
                 style={{ color: "#795548",
                 fontWeight: "bold", }}
                 activeStyle={{
@@ -77,7 +77,7 @@ class Nav extends React.Component {
             </ul>
             <ul className="right hide-on-med-and-down">
               <NavLink
-                to="/second"
+                to="/LocalFavorites"
                 style={{ color: "#795548", fontWeight: "bold", }}
                 activeStyle={{
                   textDecoration: "underline #795548 solid",

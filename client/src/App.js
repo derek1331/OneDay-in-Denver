@@ -29,11 +29,11 @@ class App extends Component {
               <main>
                 <Switch>
                   <Route exact path="/" component={Home} />
-                  <Route exact path="/second" component={Second} />
-                  <Route exact path="/third" component={Third} />
-                  <Route exact path="/fourth" component={Fourth} />
-                  <Route exact path="/testing" component={Testing} />
-                  <Route exact path="/map" component={Map} />
+                  <Route exact path="/LocalFavorites" component={Second} />
+                  <Route exact path="/Meetups" component={Third} />
+                  <Route exact path="/Itinerary" component={Fourth} />
+                  {/* <Route exact path="/testing" component={Testing} /> */}
+                  {/* <Route exact path="/map" component={Map} /> */}
                 </Switch>
               </main>
             </div>

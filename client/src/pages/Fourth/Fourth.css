@@ -24,3 +24,6 @@
 }
 
 /* End hide from IE Mac */
+.google{
+    height: unset !important;
+}
