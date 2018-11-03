@@ -176,7 +176,7 @@ class Fourth extends React.Component {
               <Cardy4>
                 <div id="calendar"> </div>
               </Cardy4>
-              <div className="google" style={{width: "1px", height:"500px!important"}}>
+              <div id="height" className="google" style={{width: "1px", height:"500px!important"}}>
               <Map
               className="google"
                 google={this.props.google}
