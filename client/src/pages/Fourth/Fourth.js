@@ -126,6 +126,13 @@ class Fourth extends React.Component {
   render() {
     return (
       <div className="container">
+                <style>
+            {`
+              #height {
+                height: 500px  !important;
+                }
+            `}
+          </style>
         <div className="section">
           <div className="row">
             <div className="col s6">
