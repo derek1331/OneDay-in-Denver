@@ -203,7 +203,7 @@ class Second extends React.Component {
             if (activity.catagory === "Entertainment") {
               return (
                 <div className="col s6">
-                  <CardPanel style={{
+                  <CardPanel key={index} style={{
                       padding: "24px",
                       borderTopColor: "#795548",
                       borderTopStyle: "solid",
