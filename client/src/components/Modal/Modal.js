@@ -131,7 +131,7 @@ class TestModal extends React.Component {
         </div>
       </div>
     ) : (
-      // signup inputs
+      // signup
       <div>
         <div className="row">
           <div className="input-field">

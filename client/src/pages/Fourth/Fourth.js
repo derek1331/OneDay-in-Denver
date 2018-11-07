@@ -75,11 +75,13 @@ class Fourth extends React.Component {
             }
           }
         }
+        // removes from calendar
         this.calendar.getEventById(event._id).remove();
 
         this.setState({ liked: liked, mapstuff: mapstuff });
         // if not found
       } else {
+        // adds to calendar
         this.calendar.addEvent({
           id: event._id,
           title: event.name,

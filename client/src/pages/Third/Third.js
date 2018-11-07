@@ -179,10 +179,10 @@ class Third extends React.Component {
                     </a>
                   </Cardy2>
                 );
-              })}{" "}
-            </div>{" "}
-          </div>{" "}
-        </div>{" "}
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

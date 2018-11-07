@@ -21,7 +21,7 @@ const eventSeed = [
     description: "Beautiful hikes filled with dramatic red-rock formations.",
     advice: "If you are short on time, just hike up to Lyons Overlook Trial!",
     img: "https://image.ibb.co/eMkAhf/roxburough.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T10:30:00",
+    start: "T10:30:00",
     time: "10:30:00"
 },
 {
@@ -38,7 +38,7 @@ const eventSeed = [
     description: "6-mile of beautiful canyon open to hike, bike and horse.",
     advice: "Walk across the road to get to the trail head",
     img: "https://image.ibb.co/gW9E8L/Waterton-Cayon.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T10:30:00",
+    start:"T10:30:00",
     time: "10:30:00"
 },
 {
@@ -55,7 +55,7 @@ const eventSeed = [
     description: "Float your boat in the lake, bicycle or hike in the foothills.",
     advice: "Chatfield has an amazing dog park for your furry friend!",
     img: "https://image.ibb.co/gAAza0/chatsfield.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T10:30:00",
+    start: "T10:30:00",
     time: "10:30:00"
 },
 {
@@ -72,7 +72,7 @@ const eventSeed = [
     description: "Excellent mountain vies 12 miles west of downtown Denver",
     advice: "hiking? Search for look out mountain trials.",
     img: "https://image.ibb.co/dqPsv0/lookout.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T10:30:00",
+    start: "T10:30:00",
     time: "10:30:00"
 },
 {
@@ -89,7 +89,7 @@ const eventSeed = [
     description: "Short hike to a Great look out over Golden, CO.",
     advice: "The inital ascent is HARD, but the views are worth the effort!",
     img: "https://image.ibb.co/hU1STL/tabletop.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T10:30:00",
+    start: "T10:30:00",
     time: "10:30:00"
 },
 {
@@ -106,7 +106,7 @@ const eventSeed = [
     description: "Colorado’s gaming powerhouse pushing to become resort destination!",
     advice: "Try your luck! Have a blast!",
     img: "https://image.ibb.co/khHqhf/blackhawk.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T18:30:00",
+    start: "T18:30:00",
     time: "18:30:00"
 },
 {
@@ -123,7 +123,7 @@ const eventSeed = [
     description: "Heart of Denver's night life. Explore many bars and clubs near Coors Field",
     advice: "It is call BroDo for a reason.",
     img: "https://image.ibb.co/m1z32f/blake.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T19:30:00",
+    start: "T19:30:00",
     time: "19:30:00"
 },
 {
@@ -140,7 +140,7 @@ const eventSeed = [
     description: "The 16th Street Mall is a pedestrian and transit mall",
     advice: "Eat, Shop, Play on a free bus system",
     img: "https://image.ibb.co/bt2Cv0/16th.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T9:30:00",
+    start: "T9:30:00",
     time: "9:30:00"
 },
 {
@@ -157,7 +157,7 @@ const eventSeed = [
     description: "The best icecream spot in a unique area of Denver",
     advice: "Vegan options available!",
     img: "https://image.ibb.co/hfLAhf/littleman.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T17:30:00",
+    start: "T17:30:00",
     time: "17:30:00"
 },
 {
@@ -174,7 +174,7 @@ const eventSeed = [
     description: "The Pearl Street Mall is a four block mall",
     advice: "I highly recomend people watching at Pearl Street.",
     img: "https://image.ibb.co/iudKa0/peal.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T09:00:00",
+    start: "T09:00:00",
     time: "09:00:00"
 },
 {
@@ -191,7 +191,7 @@ const eventSeed = [
     description: "Spectacular rock formations in the heart of boulder.",
     advice: "Park at Chautauqua park",
     img: "https://image.ibb.co/jLzsv0/flatirons.png",
-    start: new Date().toISOString().slice(0, 10)+"T10:00:00",
+    start: "T10:00:00",
     time: "10:00:00"
 },
 {
@@ -208,7 +208,7 @@ const eventSeed = [
     description: "Rock structure where concerts are given in the open.",
     advice: "Its free to go anyday, but go early.",
     img: "https://image.ibb.co/jgUgoL/red-rocks.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T11:30:00",
+    start: "T11:30:00",
     time: "11:30:00"
 },
 {
@@ -225,7 +225,7 @@ const eventSeed = [
     description: "13 restaurant stalls, three bars, and an artisan market.",
     advice: "Check out the ally in the back of the Milk Market!",
     img: "https://image.ibb.co/hMEsv0/milk-market.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T18:30:00",
+    start: "T18:30:00",
     time: "18:30:00"
 },
 {
@@ -242,7 +242,7 @@ const eventSeed = [
     description: "Public botanical garden in the Cheesman Park.",
     advice: "The small fee is worth the experience",
     img: "https://image.ibb.co/ntkXv0/Denver-Botanic-Gardens.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T11:00:00",
+    start: "T11:00:00",
     time: "11:00:00"
 },
 {
@@ -259,7 +259,7 @@ const eventSeed = [
     description: "Water park that is sure to thrill!",
     advice: "Check the entry times before you go as they change",
     img: "https://image.ibb.co/gM7O2f/water-world.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T08:30:00",
+    start: "T08:30:00",
     time: "08:30:00"
 },
 {
@@ -276,7 +276,7 @@ const eventSeed = [
     description: "Young chef opens burrito joint on East Evans Avenue.",
     advice: "Don't be surpised with how small the location is",
     img: "https://image.ibb.co/bvanTL/chipolte.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T11:30:00",
+    start: "T11:30:00",
     time: "11:30:00"
 },
 {
@@ -293,7 +293,7 @@ const eventSeed = [
     description: "Great local borito place. Got to try their fish bowl!",
     advice: "Yummm more borito bowls",
     img: "https://image.ibb.co/dBEsv0/Illegal-Petes.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T14:30:00",
+    start: "T14:30:00",
     time: "14:30:00"
 },
 {
@@ -310,7 +310,7 @@ const eventSeed = [
     description: "Expansive, renowned brewery offers free tours, as well as tastings.",
     advice: "Check times on website",
     img: "https://image.ibb.co/dr5Xv0/Coors-Brewery.jpg",
-    start: new Date().toISOString().slice(0, 10)+"T10:00:00",
+    start: "T10:00:00",
     time: "10:00:00"
 },
 ];
