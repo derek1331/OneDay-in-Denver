@@ -38,25 +38,6 @@ class Third extends React.Component {
   // Run axios
   componentWillMount() {
     this.runAxios();
-    // axios({
-    //   method: "put",
-    //   url: "http://localhost:5000/api/favorites",
-    //   data: {
-    //     username: sessionStorage.getItem("user")
-    //   }
-    // }).then(res => {
-    //   if (res.data.favorites.length >= 1) {
-    //     let other = res.data.favorites.map(event => {
-    //       return event._id;
-    //     });
-    //     this.setState({
-    //       liked: other
-    //     })
-    //     console.log(this.state.liked)
-    //   } else {
-    //     return;
-    //   }
-    // });
   }
 
   // Change Date
@@ -108,7 +89,8 @@ class Third extends React.Component {
             start: `${event.local_date}T${event.local_time}`,
             lat: event.venue ? event.venue.lat : "",
             long: event.venue ? event.venue.lon : "",
-            time: event.local_time
+            time: event.local_time,
+            kind: meetup
           }
         }).then(
           this.setState(prevState => ({
