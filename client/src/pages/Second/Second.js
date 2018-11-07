@@ -46,7 +46,7 @@ class Second extends React.Component {
             long: event.long,
             start: event.start,
             time: event.time,
-            kind: event.kind
+            kind: "local"
           }
         }).then(
           this.setState(prevState => ({
