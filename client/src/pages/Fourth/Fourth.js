@@ -77,7 +77,7 @@ class Fourth extends React.Component {
         this.calendar.addEvent({
           id: event._id,
           title: event.name,
-          start: event.type === "local" ? new Date().toISOString().slice(0, 10) + event.start : event.start
+          start: event.kind === "local" ? new Date().toISOString().slice(0, 10) + event.start : event.start
         });
         this.setState(prevState => ({
           liked: [...prevState.liked, id],
