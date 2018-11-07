@@ -1,31 +1,19 @@
-/* body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
-  
-  main {
-    flex: 1 0 auto;
-  } */
-  /* .page-footer{
-    padding-top: 10vh;
-  } */
-
   .live {
     font-family: papyrus;
     font-size: 28pt;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     margin: 0pt;
     padding: 0pt;
     left: 1pt;
     position: relative;
     float: right;
-    
+
   }
+
   .picture {
     color: teal;
     font-size: 0pt;
     position: absolute;
     padding: 0pt
-    
   }

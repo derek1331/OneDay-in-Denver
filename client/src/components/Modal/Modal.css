@@ -1,43 +1,30 @@
 .modal {
     background-color: white;
-    height:500px;
-    width:350px;
+    height: 500px;
+    width: 350px;
     color: teal;
 }
 
 .navbutton {
-    margin:0 auto;
-    margin-right:10px;
-    float:left;
+    margin: 0 auto;
+    margin-right: 10px;
+    float: left;
 }
 
 .modal .modal-content {
     padding: 0;
 }
-.modal-header{
+
+.modal-header {
     padding: 24px;
     color: white;
     background-color: teal;
 }
-.modal-body{
+
+.modal-body {
     padding: 24px;
 }
 
-.modal-footer{
+.modal-footer {
     display: none;
 }
-
-/* .modal {
-    display: none;
-    position: fixed;
-    left: 0;
-    right: 0;
-    background-color: #fafafa;
-    padding: 0;
-    max-height: 70%;
-    width: 55%;
-    margin: auto;
-    overflow-y: auto;
-    border-radius: 2px;
-    will-change: top, opacity;
-} */
