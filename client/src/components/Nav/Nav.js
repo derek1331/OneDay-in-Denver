@@ -1,14 +1,14 @@
 import React from "react";
 import "./Nav.css";
 import { NavLink } from "react-router-dom";
-import TestModal from "../Modal";
+import TestModal from "../Modal"
 
-// nav if logged in
 class Nav extends React.Component {
-  // rough logout--fix
-  logout() {
+
+  logout(){
     sessionStorage.clear();
     window.location.reload();
+
   }
 
   render() {
@@ -20,15 +20,31 @@ class Nav extends React.Component {
               <NavLink
                 exact
                 to="/fourth"
-                style={{ color: "#795548", fontWeight: "bold" }}
+                style={{ color: "#795548",
+                fontWeight: "bold", }}
               >
                 OneDay in Denver
               </NavLink>
             </ul>
-            <ul className="right hide-on-med-and-down">
+            {/* <ul className="right hide-on-med-and-down">
+              <NavLink
+                exact
+                to="/"
+                style={{ color: "#795548",
+                fontWeight: "bold",}}
+                activeStyle={{
+                 
+                  textDecoration: "underline #795548 solid"
+                }}
+              >
+                Home
+              </NavLink>
+            </ul> */}
+                        <ul className="right hide-on-med-and-down">
               <NavLink
                 to="/"
-                style={{ color: "#795548", fontWeight: "bold" }}
+                style={{ color: "#795548", fontWeight: "bold", }}
+
                 onClick={this.logout}
               >
                 Logout
@@ -37,9 +53,10 @@ class Nav extends React.Component {
             <ul className="right hide-on-med-and-down">
               <NavLink
                 to="/Itinerary"
-                style={{ color: "#795548", fontWeight: "bold" }}
+                style={{ color: "#795548",
+                fontWeight: "bold", }}
                 activeStyle={{
-                  textDecoration: "underline #795548 solid"
+                  textDecoration: "underline #795548 solid",
                 }}
               >
                 Itinerary
@@ -48,9 +65,11 @@ class Nav extends React.Component {
             <ul className="right hide-on-med-and-down">
               <NavLink
                 to="/Meetups"
-                style={{ color: "#795548", fontWeight: "bold" }}
+                style={{ color: "#795548",
+                fontWeight: "bold", }}
                 activeStyle={{
-                  textDecoration: "underline #795548 solid"
+                  textDecoration: "underline #795548 solid",
+
                 }}
               >
                 Meetups
@@ -59,14 +78,16 @@ class Nav extends React.Component {
             <ul className="right hide-on-med-and-down">
               <NavLink
                 to="/LocalFavorites"
-                style={{ color: "#795548", fontWeight: "bold" }}
+                style={{ color: "#795548", fontWeight: "bold", }}
                 activeStyle={{
-                  textDecoration: "underline #795548 solid"
+                  textDecoration: "underline #795548 solid",
                 }}
               >
                 Local Favorites
               </NavLink>
             </ul>
+
+
 
             <ul id="nav-mobile" className="sidenav">
               <li>
@@ -82,8 +103,6 @@ class Nav extends React.Component {
     );
   }
 }
-
-// nav if need to sign in
 class Nav2 extends React.Component {
   render() {
     return (
@@ -94,13 +113,14 @@ class Nav2 extends React.Component {
               <NavLink
                 exact
                 to="/"
-                style={{ color: "#795548", fontWeight: "bold" }}
+                style={{ color: "#795548",
+                fontWeight: "bold", }}
               >
                 OneDay in Denver
               </NavLink>
             </ul>
-            <div className="right hide-on-med-and-down">
-              <TestModal />
+           <div className="right hide-on-med-and-down">
+            <TestModal />
             </div>
             <ul id="nav-mobile" className="sidenav">
               <li>
@@ -117,4 +137,8 @@ class Nav2 extends React.Component {
   }
 }
 
-export { Nav, Nav2 };
+
+
+
+
+export  {Nav, Nav2};

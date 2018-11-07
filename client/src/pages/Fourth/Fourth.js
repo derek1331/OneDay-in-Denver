@@ -19,8 +19,6 @@ class Fourth extends React.Component {
       mapstuff: []
     };
   }
-  
-  // google maps red marker
   onMarkerClick = (props, marker, e) =>
     this.setState({
       selectedPlace: props,
@@ -63,25 +61,19 @@ class Fourth extends React.Component {
           if (liked[i] === id) {
             liked.splice(i, 1);
           }
-        }
-        if (mapstuff.lat === null) {
-          return;
-        } else {
-          {
-            for (var j = 0; j < mapstuff.length; i++) {
-              if (mapstuff[j].id === id) {
-                mapstuff.splice(j, 1);
-              }
-            }
+        } if(mapstuff.lat === null) {
+          return
+      } else {{
+        for (var j = 0; j < mapstuff.length; i++) {
+          if (mapstuff[j].id === id) {
+            mapstuff.splice(j, 1);
           }
-        }
-        // removes from calendar
+        }}}
         this.calendar.getEventById(event._id).remove();
 
         this.setState({ liked: liked, mapstuff: mapstuff });
         // if not found
       } else {
-        // adds to calendar
         this.calendar.addEvent({
           id: event._id,
           title: event.name,
@@ -96,8 +88,6 @@ class Fourth extends React.Component {
     }
   }
   componentDidMount() {
-
-    // api call to get user favorites
     axios({
       method: "put",
       url: "/api/favorites",
@@ -112,7 +102,6 @@ class Fourth extends React.Component {
 
     var calendarEl = document.getElementById("calendar"); // grab element reference
 
-    // new fullcalendar element
     this.calendar = new Calendar(calendarEl, {
       // put your options and callbacks here
       defaultView: "listDay",
@@ -137,32 +126,25 @@ class Fourth extends React.Component {
   render() {
     return (
       <div className="container">
-
-        {/* hack to bypass reacts !important bias */}
-        <style>
-          {`
+                <style>
+            {`
               #height {
                 height: 500px  !important;
                 }
             `}
-        </style>
+          </style>
         <div className="section">
           <div className="row">
             <div className="col s6">
-              
-              {/* map throught user favorites and display them on a card */}
               {this.state.meetups.map((event, index) => {
                 const icon = this.state.liked.includes(event._id) ? (
-                  <Icon className="star" small>
-                    star
-                  </Icon>
+                  <Icon  className="star" small>star</Icon>
                 ) : (
-                  <Icon className="star" small>
-                    star_border
-                  </Icon>
+                  <Icon className="star" small>star_border</Icon>
                 );
                 return (
                   <Cardy
+
                     key={index}
                     color="white"
                     name={event.name}
@@ -175,6 +157,8 @@ class Fourth extends React.Component {
                       borderTopWidth: "5px",
                       backgroundColor: "#fafafa"
                     }}
+                  
+                    // image="https://www.travelwyoming.com/sites/default/files/uploads/consumer/7-18_MedicineBowHikingFishing_KL_0708_3298.jpg"
                   >
                     <a
                       id={event._id}
@@ -189,47 +173,41 @@ class Fourth extends React.Component {
               })}
             </div>
             <div className="col s6 center">
-              {/* fullcalendar */}
               <Cardy4>
                 <div id="calendar"> </div>
               </Cardy4>
-              <div
-                id="height"
-                className="google"
-                style={{ width: "1px", height: "500px!important" }}
+              <div id="height" className="google" style={{width: "1px", height:"500px!important"}}>
+              <Map
+              className="google"
+                google={this.props.google}
+                zoom={10}
+                initialCenter={{ lat: 39.739, lng: -104.99 }}
+                style={{width: "531.547px", height: "500px"}}
               >
-                {/* google maps */}
-                <Map
-                  className="google"
-                  google={this.props.google}
-                  zoom={10}
-                  initialCenter={{ lat: 39.739, lng: -104.99 }}
-                  style={{ width: "531.547px", height: "500px" }}
+                {this.state.mapstuff.map((event, index) => {
+                  return (
+                    <Marker
+                      key={event.id}
+                      onClick={this.onMarkerClick}
+                      name={event.name}
+                      position={{ lat: event.lat, lng: event.lng }}
+                    />
+                  );
+                })}
+
+                <InfoWindow
+                  onOpen={this.windowHasOpened}
+                  onClose={this.windowHasClosed}
+                  marker={this.state.activeMarker}
+                  visible={this.state.showingInfoWindow}
                 >
-                  {this.state.mapstuff.map((event, index) => {
-                    return (
-                      <Marker
-                        key={event.id}
-                        onClick={this.onMarkerClick}
-                        name={event.name}
-                        position={{ lat: event.lat, lng: event.lng }}
-                      />
-                    );
-                  })}
-                  
-                  {/* loacation info window */}
-                  <InfoWindow
-                    onOpen={this.windowHasOpened}
-                    onClose={this.windowHasClosed}
-                    marker={this.state.activeMarker}
-                    visible={this.state.showingInfoWindow}
-                  >
-                    <div>
-                      <span>{this.state.selectedPlace.name}</span>
-                    </div>
-                  </InfoWindow>
-                </Map>
+                  <div>
+                    <span>{this.state.selectedPlace.name}</span>
+                  </div>
+                </InfoWindow>
+              </Map>
               </div>
+
             </div>
           </div>
         </div>
@@ -237,8 +215,6 @@ class Fourth extends React.Component {
     );
   }
 }
-
-// api key--fix
 export default GoogleApiWrapper({
   apiKey: "AIzaSyBhNoh-8XLeci7x7IWHfIGXuxcp1djJfq8"
 })(Fourth);

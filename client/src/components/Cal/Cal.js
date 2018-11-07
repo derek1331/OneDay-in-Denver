@@ -5,7 +5,6 @@ class Cal extends React.Component {
   componentDidMount() {
     var calendarEl = document.getElementById("calendar"); // grab element reference
 
-    // new fullcalendar
     var calendar = new Calendar(calendarEl, {
       // put your options and callbacks here
       defaultView: "listDay",
@@ -21,15 +20,18 @@ class Cal extends React.Component {
       columnHeader: false,
       events: [
         {
-          title: "My Event",
-          start: "2018-10-24T14:30:00",
+          title:  'My Event',
+          start:  '2018-10-24T14:30:00',
           allDay: false
         }
         // other events here...
-      ]
+      ],
+
     });
 
-    // run fullcalendar
+
+ 
+
     calendar.render();
   }
 

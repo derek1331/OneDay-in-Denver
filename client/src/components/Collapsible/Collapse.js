@@ -1,8 +1,13 @@
 import React from "react";
 import "./Collapse.css";
-import { Collapsible, CollapsibleItem, Row } from "react-materialize";
+import {
+  Collapsible,
+  CollapsibleItem,
+  Row,
+  Col,
+  CardPanel
+} from "react-materialize";
 
-// Collapse for page 2
 const Collapsed = props => (
   <div>
     <Collapsible popout defaultActiveKey={10}>

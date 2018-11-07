@@ -7,6 +7,7 @@ class Foot extends React.Component {
     return (
       <Footer
         copyrights="2018 Copyright ONEDAYINDENVER"
+
         links={
           <ul>
             <li>
@@ -21,7 +22,7 @@ class Foot extends React.Component {
             </li>
             <li>
               <a className="grey-text text-lighten-3" href="#!">
-                Itinerary
+              Itinerary
               </a>
             </li>
           </ul>
@@ -29,6 +30,8 @@ class Foot extends React.Component {
         className="teal"
       >
         <p className=" live "> LIVE LOVE WANDER</p>
+        {/* <p className = " love "> LOVE</p>
+     <p className = " Wander "> WANDER</p> */}
         <div />
 
         <div className="picture">

@@ -1,8 +1,8 @@
-/* .footer {
+.footer {
     background-color: darkorchid;
     height: 60px;
     margin-top: 10px;
-} */
+}
 
 .parallax img{
     opacity: 100 !important;
@@ -12,13 +12,4 @@
     position: absolute;
     width: 100% !important;
     margin: auto 0;
-    z-index: 1;
-    
-
 }
-
-.parallax-container{
-    background-color: rgba(0, 0, 0, 0.5);
-
-}
-

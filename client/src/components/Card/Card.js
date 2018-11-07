@@ -1,6 +1,6 @@
 import React from "react";
 import "./Card.css";
-import { CardPanel } from "react-materialize";
+import { Card, Col, CardPanel } from "react-materialize";
 
 class Cardy extends React.Component {
   render() {
@@ -17,8 +17,9 @@ class Cardy extends React.Component {
               {this.props.name}{" "}
             </span>
             <br />
-            <span style={{ color: "black", fontWeight: "bold" }}>Time: </span>
+            <span style={{ color: "black", fontWeight:"bold"}}>Time: </span>
             <span>{this.props.description}</span>
+
           </div>
           <div className="col s1">{this.props.children}</div>
         </div>
@@ -60,11 +61,7 @@ class Cardy2 extends React.Component {
 
 class Cardy4 extends React.Component {
   render() {
-    return (
-      <CardPanel style={{ backgroundColor: "#fafafa" }}>
-        {this.props.children}
-      </CardPanel>
-    );
+    return <CardPanel style={{backgroundColor: "#fafafa"}}>{this.props.children}</CardPanel>;
   }
 }
 export { Cardy, Cardy2, Cardy4 };
