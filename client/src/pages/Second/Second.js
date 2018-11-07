@@ -1,8 +1,7 @@
 import React from "react";
 import "./Second.css";
 import Collapsed from "../../components/Collapsible";
-import { Cardy } from "../../components/Card";
-import { Col, CardPanel, Icon } from "react-materialize";
+import { CardPanel, Icon } from "react-materialize";
 import axios from "axios-jsonp-pro";
 
 class Second extends React.Component {
@@ -45,7 +44,8 @@ class Second extends React.Component {
             lat: event.lat,
             long: event.long,
             start: event.start,
-            time: event.time
+            time: event.time,
+            type: "local"
           }
         }).then(
           this.setState(prevState => ({
