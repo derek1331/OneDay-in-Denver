@@ -14,15 +14,18 @@ class Second extends React.Component {
     };
   }
 
+  // favorites button
   handleChange(id, event) {
     const { liked } = this.state;
 
     if (liked.length >= 1) {
       if (liked.includes(id)) {
+        // loops through liked and removes the current one
         for (var i = 0; i < liked.length; i++) {
           if (liked[i] === id) {
             liked.splice(i, 1);
           }
+        // deletes it from database
         }axios({
           method: "put",
           url: "/api/delete",
@@ -36,6 +39,7 @@ class Second extends React.Component {
       } else {
         console.log(sessionStorage.getItem("user"));
         console.log(event.name);
+        // adds it to dataase
         axios({
           method: "put",
           url: "/api/users",
@@ -56,6 +60,7 @@ class Second extends React.Component {
     }
   }
 
+  // api call to get events
   componentDidMount() {
     axios({
       method: "get",
@@ -72,6 +77,7 @@ class Second extends React.Component {
     return (
       <div className="container">
         <Collapsed
+        // maps throught liked and displays adventure
           adventure={this.state.activity.map((activity, index) => {
             const icon = this.state.liked.includes(activity._id) ? (
               <Icon className="star" small>star</Icon>
@@ -133,6 +139,7 @@ class Second extends React.Component {
               );
             }
           })}
+          // maps throught liked and dispalys dining
           dining={this.state.activity.map((activity, index) => {
             const icon = this.state.liked.includes(activity._id) ? (
               <Icon className="star" small>star</Icon>
@@ -194,6 +201,7 @@ class Second extends React.Component {
               );
             }
           })}
+          // maps throught liked and dispalys entertainment
           entertainment={this.state.activity.map((activity, index) => {
             const icon = this.state.liked.includes(activity._id) ? (
               <Icon className="star" small>star</Icon>

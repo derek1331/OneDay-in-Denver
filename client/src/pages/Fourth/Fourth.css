@@ -1,3 +1,4 @@
+/* star icons remove highlight */
 .star {
     cursor: pointer;
     color: gold;
@@ -10,6 +11,7 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+/* fullcalendar */
 .fc-left>h2 {
 
     display: block;
@@ -23,7 +25,7 @@
 
 }
 
-/* End hide from IE Mac */
+/* google maps  */
 .google{
     height: unset !important;
 }

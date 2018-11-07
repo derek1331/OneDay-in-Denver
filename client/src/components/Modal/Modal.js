@@ -12,6 +12,7 @@ class TestModal extends React.Component {
     login: true
   };
 
+  // handles signup
   handleSubmit = event => {
     event.preventDefault();
     console.log("sign-up-form, email: ");
@@ -41,17 +42,22 @@ class TestModal extends React.Component {
         console.log(error);
       });
   };
+
+  // sets state for signin
   handleSign = () => {
     this.setState({
       login: false
     });
   };
 
+  // sets state for login
   handleLo = () => {
     this.setState({
       login: true
     });
   };
+
+  // handles login
   handleLogin = event => {
     event.preventDefault();
     console.log("handleLogin");
@@ -80,6 +86,7 @@ class TestModal extends React.Component {
       });
   };
 
+  // gets values from inputs
   handleChange = event => {
     console.log(event.target.name);
 
@@ -93,6 +100,7 @@ class TestModal extends React.Component {
       return <Redirect to={{ pathname: this.state.redirectTo }} />;
     }
     const icon = this.state.login ? (
+      // login inputs
       <div>
         <div className="row">
           <div className="input-field">
@@ -123,6 +131,7 @@ class TestModal extends React.Component {
         </div>
       </div>
     ) : (
+      // signup inputs
       <div>
         <div className="row">
           <div className="input-field">
@@ -154,6 +163,8 @@ class TestModal extends React.Component {
       </div>
     );
     return (
+
+      // modal
       <Modal trigger={<Button>Sign Up | Login</Button>}>
         <div className="modal-header center-align">
           <img src="https://image.ibb.co/cZsma0/logo.png" alt=" Mountains" />
@@ -172,7 +183,6 @@ class TestModal extends React.Component {
               style={{ color: "#795548", cursor: "pointer" }}
               onClick={this.handleLo}
             >
-              {" "}
               Login
             </a>
           </div>
