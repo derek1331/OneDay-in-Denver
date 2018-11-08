@@ -14,7 +14,8 @@ const userSchema = new Schema({
 		start: String,
 		lat: Number,
 		long: Number,
-		time: String
+		time: String,
+		kind: String
     }]
 
 })

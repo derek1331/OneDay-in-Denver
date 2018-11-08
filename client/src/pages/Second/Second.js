@@ -45,7 +45,8 @@ class Second extends React.Component {
             lat: event.lat,
             long: event.long,
             start: event.start,
-            time: event.time
+            time: event.time,
+            kind: "local"
           }
         }).then(
           this.setState(prevState => ({
