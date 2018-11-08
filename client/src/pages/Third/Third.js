@@ -16,8 +16,8 @@ class Third extends React.Component {
     };
   }
 
-  // Get from meetups API
-  runAxios() {
+  // get meetups from meetups api
+  componentWillMount() {
     axios
       .jsonp(
         `https://api.meetup.com/find/upcoming_events?&sign=tru&key=7d3c6c6011422e5e152c5d752564e77&photo-host=public&lon=-104.990&end_date_range=${
@@ -33,30 +33,6 @@ class Third extends React.Component {
         });
         console.log(res.data.events);
       });
-  }
-
-  // Run axios
-  componentWillMount() {
-    this.runAxios();
-    // axios({
-    //   method: "put",
-    //   url: "http://localhost:5000/api/favorites",
-    //   data: {
-    //     username: sessionStorage.getItem("user")
-    //   }
-    // }).then(res => {
-    //   if (res.data.favorites.length >= 1) {
-    //     let other = res.data.favorites.map(event => {
-    //       return event._id;
-    //     });
-    //     this.setState({
-    //       liked: other
-    //     })
-    //     console.log(this.state.liked)
-    //   } else {
-    //     return;
-    //   }
-    // });
   }
 
   // Change Date
@@ -75,16 +51,19 @@ class Third extends React.Component {
     }
   };
 
+  // handles favorites Button
   handleChange(id, event) {
     const { liked } = this.state;
 
     if (liked.length >= 1) {
       if (liked.includes(id)) {
         for (var i = 0; i < liked.length; i++) {
+          // if button has already been clicked
           if (liked[i] === id) {
             liked.splice(i, 1);
           }
         }
+        // delete meetup from user favorites
         axios({
           method: "put",
           url: "/api/delete",
@@ -99,6 +78,7 @@ class Third extends React.Component {
         );
         // if not found
       } else {
+        // add meetup to user favorites
         axios({
           method: "put",
           url: "/api/users",
@@ -135,22 +115,21 @@ class Third extends React.Component {
               </span>
             </div>
             <div className="col s6 center-align">
-              
-                <input
-                  id="date"
-                  type="date"
-                  name="bday"
-                  style={{
-                    width: "50%",
-                    fontSize: "2.28rem"
-                  }}
-                  onChange={this.renderMeetups}
-                />
-              
+              <input
+                id="date"
+                type="date"
+                name="bday"
+                style={{
+                  width: "50%",
+                  fontSize: "2.28rem"
+                }}
+                onChange={this.renderMeetups}
+              />
             </div>
           </div>
           <div className="row">
             <div className="col s12">
+              {/* maps through meetups */}
               {this.state.meetups.map((event, index) => {
                 function doesExist() {
                   if (event.venue) {
@@ -161,13 +140,11 @@ class Third extends React.Component {
                 }
                 const icon = this.state.liked.includes(event.id) ? (
                   <Icon className="star" small>
-                    {" "}
-                    star{" "}
+                    star
                   </Icon>
                 ) : (
                   <Icon className="star" small>
-                    {" "}
-                    star_border{" "}
+                    star_border
                   </Icon>
                 );
 

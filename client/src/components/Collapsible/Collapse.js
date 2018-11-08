@@ -1,12 +1,6 @@
 import React from "react";
 import "./Collapse.css";
-import {
-  Collapsible,
-  CollapsibleItem,
-  Row,
-  Col,
-  CardPanel
-} from "react-materialize";
+import { Collapsible, CollapsibleItem, Row } from "react-materialize";
 
 const Collapsed = props => (
   <div>
