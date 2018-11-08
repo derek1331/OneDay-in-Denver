@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+// Define eventSchema
 const eventSchema = new Schema({
     name: {type: String, required: true},
     category: String,

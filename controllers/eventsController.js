@@ -1,5 +1,6 @@
 const db = require("../models");
 
+// function for db.events
 module.exports = {
     findAll: function(req, res) {
         db.Events

@@ -1,5 +1,6 @@
 const db = require("../models");
 
+// functions for db.users
 module.exports = {
     findAll: function (req, res) {
         db.Users
@@ -28,9 +29,6 @@ module.exports = {
 
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
-
-
-
     },
     updateOne: function (req, res) {
         db.Users
@@ -45,7 +43,7 @@ module.exports = {
                         long: req.body.long,
                         time: req.body.time,
                         kind: req.body.kind
-                        
+
 
                     }
                 },
@@ -54,7 +52,6 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
-
     findOne: function (req, res) {
         db.Users
             .findOne({
