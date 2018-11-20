@@ -68,7 +68,7 @@ class Fourth extends React.Component {
           // if there is, remove it from the map
         } else {
           {
-            for (var j = 0; j < mapstuff.length; i++) {
+            for (var j = 0; j < mapstuff.length; j++) {
               if (mapstuff[j].id === id) {
                 mapstuff.splice(j, 1);
               }
