@@ -44,7 +44,21 @@ class Third extends React.Component {
         {
           query: date
         },
-        this.runAxios
+        () =>  {axios 
+        .jsonp(
+          `https://api.meetup.com/find/upcoming_events?&sign=tru&key=7d3c6c6011422e5e152c5d752564e77&photo-host=public&lon=-104.990&end_date_range=${
+            this.state.query
+          }T23:59:59&start_date_range=${
+            this.state.query
+          }T00:00:00&page=20&lat=39.739&order=time`
+        )
+        .then(res => {
+          const meetups = res.data.events;
+          this.setState({
+            meetups
+          });
+          console.log(res.data.events);
+        })}
       );
     } else {
       return;
