@@ -57,7 +57,7 @@ class Fourth extends React.Component {
     if (liked.length >= 1) {
       // if button has already been clicked
       if (liked.includes(id)) {
-        for (var i = 0; i < liked.length; i++) {
+        for (let i = 0; i < liked.length; i++) {
           if (liked[i] === id) {
             liked.splice(i, 1);
           }
@@ -68,7 +68,7 @@ class Fourth extends React.Component {
           // if there is, remove it from the map
         } else {
           {
-            for (var j = 0; j < mapstuff.length; i++) {
+            for (let j = 0; j < mapstuff.length; j++) {
               if (mapstuff[j].id === id) {
                 mapstuff.splice(j, 1);
               }
