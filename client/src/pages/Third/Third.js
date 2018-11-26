@@ -18,6 +18,26 @@ class Third extends React.Component {
 
   // get meetups from meetups api
   componentWillMount() {
+    // searches users favorites to see if they already liked any
+    axios({
+      method: "put",
+      url: "http://localhost:5000/api/favorites",
+      data: {
+        username: sessionStorage.getItem("user")
+      }
+    }).then(res => {
+      // stores already favorited
+      const alreadyFavorited = res.data.favorites;
+      const liked = [1]
+      //maps through alreaydyFavorited and pushedes each id to liked array
+      alreadyFavorited.map((activity, index) => {
+        console.log(activity);
+        liked.push(activity.id)
+      })
+      // sets state of liked to liked array
+      this.setState({ liked });
+      console.log(liked);
+    }).then( () => {
     axios
       .jsonp(
         `https://api.meetup.com/find/upcoming_events?&sign=tru&key=7d3c6c6011422e5e152c5d752564e77&photo-host=public&lon=-104.990&end_date_range=${
@@ -33,7 +53,7 @@ class Third extends React.Component {
         });
         console.log(res.data.events);
       });
-  }
+  })}
   
   renderMeetups = () => {
     let date = document.getElementById("date").value;
@@ -102,12 +122,15 @@ class Third extends React.Component {
             lat: event.venue ? event.venue.lat : "",
             long: event.venue ? event.venue.lon : "",
             time: event.local_time,
-            kind: "meetup"
+            kind: "meetup",
+            id: event.id
           }
         }).then(
           this.setState(prevState => ({
-            liked: [...prevState.liked, id]
-          }))
+            liked: [...prevState.liked, event.id]
+          })),
+          console.log("id" + event.id)
+
         );
       }
     }

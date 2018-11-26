@@ -11,7 +11,6 @@ class Second extends React.Component {
     this.state = {
       activity: [],
       liked: [1]
-
     };
   }
 
@@ -45,7 +44,7 @@ class Second extends React.Component {
         // add it to user favorites
         axios({
           method: "put",
-          url: "http://localhost:5000/api/users",
+          url: process.env.PORT ? "/api/users" : "http://localhost:5000/api/users"  ,
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name,
@@ -68,31 +67,35 @@ class Second extends React.Component {
 
   // get all local favorites/activities
   componentWillMount() {
+    // searches users favorites to see if they already liked any
     axios({
       method: "put",
       url: "http://localhost:5000/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
-    }).then(res => {
-      const poop = res.data.favorites;
-      const liked = [1]
-      poop.map((activity, index) => {
-        console.log(activity);
-        liked.push(activity.id)
+      // stores already favorited
+    })
+      .then(res => {
+        const poop = res.data.favorites;
+        const liked = [1];
+        poop.map((activity, index) => {
+          console.log(activity);
+          liked.push(activity.id);
+        });
+        this.setState({ liked });
+        console.log(liked);
       })
-      this.setState({ liked });
-      console.log(liked);
-    }).then( () => {
-    
-    axios({
-      method: "get",
-      url: "http://localhost:5000/api/events"
-    }).then(res => {
-      const activity = res.data;
-      this.setState({ activity });
-      console.log(activity);
-    })});
+      .then(() => {
+        axios({
+          method: "get",
+          url: "http://localhost:5000/api/events"
+        }).then(res => {
+          const activity = res.data;
+          this.setState({ activity });
+          console.log(activity);
+        });
+      });
   }
 
   render() {
@@ -173,7 +176,6 @@ class Second extends React.Component {
               );
             }
           })}
-
           // maps throught the activity
           dining={this.state.activity.map((activity, index) => {
             const icon = this.state.liked.includes(activity._id) ? (
@@ -249,7 +251,6 @@ class Second extends React.Component {
               );
             }
           })}
-
           // maps throught the activity
           entertainment={this.state.activity.map((activity, index) => {
             const icon = this.state.liked.includes(activity._id) ? (
@@ -262,7 +263,7 @@ class Second extends React.Component {
               </Icon>
             );
 
-            // if category === entertainment 
+            // if category === entertainment
             if (activity.catagory === "Entertainment") {
               return (
                 <div className="col s6">
