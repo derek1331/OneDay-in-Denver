@@ -102,7 +102,7 @@ class Fourth extends React.Component {
   componentDidMount() {
     axios({
       method: "put",
-      url: "/api/favorites",
+      url: "http://localhost:5000/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }

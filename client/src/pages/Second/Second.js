@@ -11,6 +11,7 @@ class Second extends React.Component {
     this.state = {
       activity: [],
       liked: [1]
+
     };
   }
 
@@ -29,7 +30,7 @@ class Second extends React.Component {
         // delete it from user favorites
         axios({
           method: "put",
-          url: "/api/delete",
+          url: "http://localhost:5000/api/delete",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name
@@ -44,7 +45,7 @@ class Second extends React.Component {
         // add it to user favorites
         axios({
           method: "put",
-          url: "/api/users",
+          url: "http://localhost:5000/api/users",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name,
@@ -52,27 +53,46 @@ class Second extends React.Component {
             long: event.long,
             start: event.start,
             time: event.time,
-            kind: "local"
+            kind: "local",
+            id: event._id
           }
         }).then(
           this.setState(prevState => ({
-            liked: [...prevState.liked, id]
-          }))
+            liked: [...prevState.liked, event._id]
+          })),
+          console.log("id" + event._id)
         );
       }
     }
   }
 
   // get all local favorites/activities
-  componentDidMount() {
+  componentWillMount() {
+    axios({
+      method: "put",
+      url: "http://localhost:5000/api/favorites",
+      data: {
+        username: sessionStorage.getItem("user")
+      }
+    }).then(res => {
+      const poop = res.data.favorites;
+      const liked = [1]
+      poop.map((activity, index) => {
+        console.log(activity);
+        liked.push(activity.id)
+      })
+      this.setState({ liked });
+      console.log(liked);
+    }).then( () => {
+    
     axios({
       method: "get",
-      url: "/api/events"
+      url: "http://localhost:5000/api/events"
     }).then(res => {
       const activity = res.data;
       this.setState({ activity });
       console.log(activity);
-    });
+    })});
   }
 
   render() {

@@ -79,7 +79,7 @@ class Third extends React.Component {
         // delete meetup from user favorites
         axios({
           method: "put",
-          url: "/api/delete",
+          url: "http://localhost:5000/api/delete",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name
@@ -94,7 +94,7 @@ class Third extends React.Component {
         // add meetup to user favorites
         axios({
           method: "put",
-          url: "/api/users",
+          url: "http://localhost:5000/api/users",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name,
