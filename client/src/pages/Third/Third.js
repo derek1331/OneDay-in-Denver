@@ -21,7 +21,7 @@ class Third extends React.Component {
     // searches users favorites to see if they already liked any
     axios({
       method: "put",
-      url: "http://localhost:5000/api/favorites",
+      url: "/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
@@ -99,7 +99,7 @@ class Third extends React.Component {
         // delete meetup from user favorites
         axios({
           method: "put",
-          url: "http://localhost:5000/api/delete",
+          url: "/api/delete",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name
@@ -114,7 +114,7 @@ class Third extends React.Component {
         // add meetup to user favorites
         axios({
           method: "put",
-          url: "http://localhost:5000/api/users",
+          url: "/api/users",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name,
