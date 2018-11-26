@@ -44,7 +44,7 @@ class Second extends React.Component {
         // add it to user favorites
         axios({
           method: "put",
-          url: process.env.PORT ? "/api/users" : "http://localhost:5000/api/users"  ,
+          url: "http://localhost:5000/api/users",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name,
