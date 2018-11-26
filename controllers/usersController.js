@@ -44,7 +44,8 @@ module.exports = {
                         lat: req.body.lat,
                         long: req.body.long,
                         time: req.body.time,
-                        kind: req.body.kind
+                        kind: req.body.kind,
+                        id: req.body.id
                         
 
                     }

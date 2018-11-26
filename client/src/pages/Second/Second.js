@@ -29,7 +29,7 @@ class Second extends React.Component {
         // delete it from user favorites
         axios({
           method: "put",
-          url: "/api/delete",
+          url: "http://localhost:5000/api/delete",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name
@@ -44,7 +44,7 @@ class Second extends React.Component {
         // add it to user favorites
         axios({
           method: "put",
-          url: "/api/users",
+          url: "http://localhost:5000/api/users",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name,
@@ -52,27 +52,50 @@ class Second extends React.Component {
             long: event.long,
             start: event.start,
             time: event.time,
-            kind: "local"
+            kind: "local",
+            id: event._id
           }
         }).then(
           this.setState(prevState => ({
-            liked: [...prevState.liked, id]
-          }))
+            liked: [...prevState.liked, event._id]
+          })),
+          console.log("id" + event._id)
         );
       }
     }
   }
 
   // get all local favorites/activities
-  componentDidMount() {
+  componentWillMount() {
+    // searches users favorites to see if they already liked any
     axios({
-      method: "get",
-      url: "/api/events"
-    }).then(res => {
-      const activity = res.data;
-      this.setState({ activity });
-      console.log(activity);
-    });
+      method: "put",
+      url: "http://localhost:5000/api/favorites",
+      data: {
+        username: sessionStorage.getItem("user")
+      }
+      // stores already favorited
+    })
+      .then(res => {
+        const poop = res.data.favorites;
+        const liked = [1];
+        poop.map((activity, index) => {
+          console.log(activity);
+          liked.push(activity.id);
+        });
+        this.setState({ liked });
+        console.log(liked);
+      })
+      .then(() => {
+        axios({
+          method: "get",
+          url: "http://localhost:5000/api/events"
+        }).then(res => {
+          const activity = res.data;
+          this.setState({ activity });
+          console.log(activity);
+        });
+      });
   }
 
   render() {
@@ -153,7 +176,6 @@ class Second extends React.Component {
               );
             }
           })}
-
           // maps throught the activity
           dining={this.state.activity.map((activity, index) => {
             const icon = this.state.liked.includes(activity._id) ? (
@@ -229,7 +251,6 @@ class Second extends React.Component {
               );
             }
           })}
-
           // maps throught the activity
           entertainment={this.state.activity.map((activity, index) => {
             const icon = this.state.liked.includes(activity._id) ? (
@@ -242,7 +263,7 @@ class Second extends React.Component {
               </Icon>
             );
 
-            // if category === entertainment 
+            // if category === entertainment
             if (activity.catagory === "Entertainment") {
               return (
                 <div className="col s6">
