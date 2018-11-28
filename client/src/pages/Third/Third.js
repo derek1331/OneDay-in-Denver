@@ -33,6 +33,21 @@ Date.prototype.toIsoString = function() {
 
 let todaysDate = new Date();
 
+// 24hr time to 12hr time
+
+function tConvert (time) {
+  // Check correct time format and split into components
+  time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+  if (time.length > 1) { // If time format correct
+    time = time.slice (1);  // Remove full string match value
+    time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+    time[0] = +time[0] % 12 || 12; // Adjust hours
+  }
+  return time.join (''); // return adjusted time or original string
+}
+
+
 
 class Third extends React.Component {
   constructor(props) {
@@ -50,7 +65,7 @@ class Third extends React.Component {
     // searches users favorites to see if they already liked any
     axios({
       method: "put",
-      url: "http://localhost:5000/api/favorites",
+      url: "/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
@@ -120,6 +135,7 @@ class Third extends React.Component {
 
   // handles favorites Button
   handleChange(id, event) {
+
     const { liked } = this.state;
 
     if (liked.length >= 1) {
@@ -133,7 +149,7 @@ class Third extends React.Component {
         // delete meetup from user favorites
         axios({
           method: "put",
-          url: "http://localhost:5000/api/delete",
+          url: "/api/delete",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name
@@ -148,14 +164,14 @@ class Third extends React.Component {
         // add meetup to user favorites
         axios({
           method: "put",
-          url: "http://localhost:5000/api/users",
+          url: "/api/users",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name,
             start: `${event.local_date}T${event.local_time}`,
             lat: event.venue ? event.venue.lat : "",
             long: event.venue ? event.venue.lon : "",
-            time: event.local_time,
+            time:   tConvert (event.local_time,),
             kind: "meetup",
             id: event.id
           }
@@ -236,7 +252,7 @@ class Third extends React.Component {
                       namecolor="teal-text"
                       name={event.name}
                       href={event.link}
-                      time={event.local_time}
+                      time={tConvert(event.local_time)}
                       location={doesExist()}
                     >
                       <a
