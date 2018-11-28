@@ -12,6 +12,19 @@ class LoginModal extends React.Component {
     login: true
   };
 
+  // focusInput = (component) => {
+  //   if (component) {
+  //     component.focus();
+  //   }
+  // };
+
+
+  componentDidMount() {
+    
+      document.querySelector(".log").focus();
+     }
+
+
   //handles signup
   handleSubmit = event => {
     event.preventDefault();
@@ -106,19 +119,20 @@ class LoginModal extends React.Component {
       <div>
         <div className="row">
           <div className="input-field">
-            <i class="material-icons prefix">email</i>
+            <i className="material-icons prefix">email</i>
             <input
               type="email"
               name="username"
               placeholder="Email"
               value={this.state.username}
               onChange={this.handleChange}
+              className="log"
             />
           </div>
         </div>
         <div className="row">
           <div className="input-field">
-            <i class="material-icons prefix">lock</i>
+            <i className="material-icons prefix">lock</i>
             <input
               type="password"
               name="password"
@@ -136,7 +150,7 @@ class LoginModal extends React.Component {
       <div>
         <div className="row">
           <div className="input-field">
-            <i class="material-icons prefix">email</i>
+            <i className="material-icons prefix">email</i>
             <input
               type="email"
               name="username"
@@ -148,7 +162,7 @@ class LoginModal extends React.Component {
         </div>
         <div className="row">
           <div className="input-field">
-            <i class="material-icons prefix">lock</i>
+            <i className="material-icons prefix">lock</i>
             <input
               type="password"
               name="password"
@@ -164,7 +178,7 @@ class LoginModal extends React.Component {
       </div>
     );
     return (
-      <Modal trigger={<Button>Sign Up | Login</Button>}>
+      <Modal trigger={<Button>Sign Up | Login</Button>} >
         <div className="modal-header center-align">
           <img src="https://image.ibb.co/cZsma0/logo.png" alt=" Mountains" />
         </div>

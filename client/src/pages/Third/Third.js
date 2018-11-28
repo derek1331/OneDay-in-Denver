@@ -2,8 +2,37 @@ import React from "react";
 import "./Third.css";
 import { Cardy2 } from "../../components/Card";
 import axios from "axios-jsonp-pro";
-// import { LikeButton } from "../../components/Button";
 import { Icon } from "react-materialize";
+
+// Mountain Time
+Date.prototype.toIsoString = function() {
+  var tzo = -this.getTimezoneOffset(),
+    dif = tzo >= 0 ? "+" : "-",
+    pad = function(num) {
+      var norm = Math.floor(Math.abs(num));
+      return (norm < 10 ? "0" : "") + norm;
+    };
+  return (
+    this.getFullYear() +
+    "-" +
+    pad(this.getMonth() + 1) +
+    "-" +
+    pad(this.getDate()) +
+    "T" +
+    pad(this.getHours()) +
+    ":" +
+    pad(this.getMinutes()) +
+    ":" +
+    pad(this.getSeconds()) +
+    dif +
+    pad(tzo / 60) +
+    ":" +
+    pad(tzo % 60)
+  );
+};
+
+let todaysDate = new Date();
+
 
 class Third extends React.Component {
   constructor(props) {
@@ -12,7 +41,7 @@ class Third extends React.Component {
       activity: [],
       liked: [1],
       meetups: [],
-      query: new Date().toISOString().slice(0, 10)
+      query: todaysDate.toIsoString().slice(0, 10)
     };
   }
 
@@ -25,36 +54,39 @@ class Third extends React.Component {
       data: {
         username: sessionStorage.getItem("user")
       }
-    }).then(res => {
-      // stores already favorited
-      const alreadyFavorited = res.data.favorites;
-      const liked = [1]
-      //maps through alreaydyFavorited and pushedes each id to liked array
-      alreadyFavorited.map((activity, index) => {
-        console.log(activity);
-        liked.push(activity.id)
-      })
-      // sets state of liked to liked array
-      this.setState({ liked });
-      console.log(liked);
-    }).then( () => {
-    axios
-      .jsonp(
-        `https://api.meetup.com/find/upcoming_events?&sign=tru&key=7d3c6c6011422e5e152c5d752564e77&photo-host=public&lon=-104.990&end_date_range=${
-          this.state.query
-        }T23:59:59&start_date_range=${
-          this.state.query
-        }T00:00:00&page=20&lat=39.739&order=time`
-      )
+    })
       .then(res => {
-        const meetups = res.data.events;
-        this.setState({
-          meetups
+        // stores already favorited
+        const alreadyFavorited = res.data.favorites;
+        const liked = [1];
+        //maps through alreaydyFavorited and pushedes each id to liked array
+        alreadyFavorited.map((activity, index) => {
+          console.log(activity);
+          liked.push(activity.id);
         });
-        console.log(res.data.events);
+        // sets state of liked to liked array
+        this.setState({ liked });
+        console.log(liked);
+      })
+      .then(() => {
+        axios
+          .jsonp(
+            `https://api.meetup.com/find/upcoming_events?&sign=tru&key=7d3c6c6011422e5e152c5d752564e77&photo-host=public&lon=-104.990&end_date_range=${
+              this.state.query
+            }T23:59:59&start_date_range=${
+              this.state.query
+            }T00:00:00&page=20&lat=39.739&order=time`
+          )
+          .then(res => {
+            const meetups = res.data.events;
+            this.setState({
+              meetups
+            });
+            console.log(res.data.events);
+          });
       });
-  })}
-  
+  }
+
   renderMeetups = () => {
     let date = document.getElementById("date").value;
     console.log(date);
@@ -63,21 +95,23 @@ class Third extends React.Component {
         {
           query: date
         },
-        () =>  {axios 
-        .jsonp(
-          `https://api.meetup.com/find/upcoming_events?&sign=tru&key=7d3c6c6011422e5e152c5d752564e77&photo-host=public&lon=-104.990&end_date_range=${
-            this.state.query
-          }T23:59:59&start_date_range=${
-            this.state.query
-          }T00:00:00&page=20&lat=39.739&order=time`
-        )
-        .then(res => {
-          const meetups = res.data.events;
-          this.setState({
-            meetups
-          });
-          console.log(res.data.events);
-        })}
+        () => {
+          axios
+            .jsonp(
+              `https://api.meetup.com/find/upcoming_events?&sign=tru&key=7d3c6c6011422e5e152c5d752564e77&photo-host=public&lon=-104.990&end_date_range=${
+                this.state.query
+              }T23:59:59&start_date_range=${
+                this.state.query
+              }T00:00:00&page=20&lat=39.739&order=time`
+            )
+            .then(res => {
+              const meetups = res.data.events;
+              this.setState({
+                meetups
+              });
+              console.log(res.data.events);
+            });
+        }
       );
     } else {
       return;
@@ -130,7 +164,6 @@ class Third extends React.Component {
             liked: [...prevState.liked, event.id]
           })),
           console.log("id" + event.id)
-
         );
       }
     }
@@ -166,53 +199,62 @@ class Third extends React.Component {
           <div className="row">
             <div className="col s12">
               {/* maps through meetups */}
-              {this.state.meetups.map((event, index) => {
-                function doesExist() {
-                  if (event.venue) {
-                    return event.venue.name;
-                  } else {
-                    return "Not Available";
+              {
+                // if none available
+              }{" "}
+              {this.state.meetups.length > 0 ? (
+                this.state.meetups.map((event, index) => {
+                  function doesExist() {
+                    if (event.venue) {
+                      return event.venue.name;
+                    } else {
+                      return "Not Available";
+                    }
                   }
-                }
-                const icon = this.state.liked.includes(event.id) ? (
-                  <Icon className="star" small>
-                    star
-                  </Icon>
-                ) : (
-                  <Icon className="star" small>
-                    star_border
-                  </Icon>
-                );
+                  const icon = this.state.liked.includes(event.id) ? (
+                    <Icon className="star" small>
+                      star
+                    </Icon>
+                  ) : (
+                    <Icon className="star" small>
+                      star_border
+                    </Icon>
+                  );
 
-                return (
-                  <Cardy2
-                    key={index}
-                    style={{
-                      padding: "24px",
-                      borderTopColor: "#795548",
-                      borderTopStyle: "solid",
-                      borderTopWidth: "5px",
-                      backgroundColor: "#fafafa",
-                      height: "132px"
-                    }}
-                    class="col s6"
-                    namecolor="teal-text"
-                    name={event.name}
-                    href={event.link}
-                    time={event.local_time}
-                    location={doesExist()}
-                  >
-                    <a
-                      id={event.id}
-                      className="right"
-                      key={event._id}
-                      onClick={this.handleChange.bind(this, event.id, event)}
+                  return (
+                    <Cardy2
+                      key={index}
+                      style={{
+                        padding: "24px",
+                        borderTopColor: "#795548",
+                        borderTopStyle: "solid",
+                        borderTopWidth: "5px",
+                        backgroundColor: "#fafafa",
+                        height: "132px"
+                      }}
+                      class="col s6"
+                      namecolor="teal-text"
+                      name={event.name}
+                      href={event.link}
+                      time={event.local_time}
+                      location={doesExist()}
                     >
-                      {icon}
-                    </a>
-                  </Cardy2>
-                );
-              })}{" "}
+                      <a
+                        id={event.id}
+                        className="right"
+                        key={event._id}
+                        onClick={this.handleChange.bind(this, event.id, event)}
+                      >
+                        {icon}
+                      </a>
+                    </Cardy2>
+                  );
+                })
+              ) : (
+                <h5 className="center">
+                  Sorry there are no more Meetups today
+                </h5>
+              )}
             </div>{" "}
           </div>{" "}
         </div>{" "}
