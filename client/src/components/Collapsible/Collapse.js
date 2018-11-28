@@ -5,7 +5,7 @@ import { Collapsible, CollapsibleItem, Row } from "react-materialize";
 const Collapsed = props => (
   <div>
     <Collapsible popout defaultActiveKey={10}>
-      <CollapsibleItem header="Adventure" icon="landscape">
+      <CollapsibleItem  header="Adventure" icon="landscape">
         <Row>{props.adventure}</Row>
       </CollapsibleItem>
       <CollapsibleItem
