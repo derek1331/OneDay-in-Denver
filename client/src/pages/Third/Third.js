@@ -31,7 +31,7 @@ Date.prototype.toIsoString = function() {
   );
 };
 
-let todaysDate = new Date();
+var todaysDate = new Date();
 
 // 24hr time to 12hr time
 
@@ -62,10 +62,12 @@ class Third extends React.Component {
 
   // get meetups from meetups api
   componentWillMount() {
+    console.log(todaysDate.toIsoString().slice(0, 10))
+
     // searches users favorites to see if they already liked any
     axios({
       method: "put",
-      url: "/api/favorites",
+      url: "http://localhost:5000/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
@@ -149,7 +151,7 @@ class Third extends React.Component {
         // delete meetup from user favorites
         axios({
           method: "put",
-          url: "/api/delete",
+          url: "http://localhost:5000/api/delete",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name
@@ -157,14 +159,18 @@ class Third extends React.Component {
         }).then(
           this.setState({
             liked: liked
-          })
+          }),
+          window.Materialize.toast(`${event.name} has been removed`, 900),
+          // window.Materialize.toast("<p><span class='toast-name'>"+event.name+"</span><span> has been removed</span></p>"),
+
+
         );
         // if not found
       } else {
         // add meetup to user favorites
         axios({
           method: "put",
-          url: "/api/users",
+          url: "http://localhost:5000/api/users",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name,
@@ -179,6 +185,7 @@ class Third extends React.Component {
           this.setState(prevState => ({
             liked: [...prevState.liked, event.id]
           })),
+          window.Materialize.toast(`${event.name} has been added`, 900),
           console.log("id" + event.id)
         );
       }
