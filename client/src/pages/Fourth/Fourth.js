@@ -6,6 +6,35 @@ import { Calendar } from "fullcalendar";
 import { Icon } from "react-materialize";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
+// Mountain Time
+Date.prototype.toIsoString = function() {
+  var tzo = -this.getTimezoneOffset(),
+    dif = tzo >= 0 ? "+" : "-",
+    pad = function(num) {
+      var norm = Math.floor(Math.abs(num));
+      return (norm < 10 ? "0" : "") + norm;
+    };
+  return (
+    this.getFullYear() +
+    "-" +
+    pad(this.getMonth() + 1) +
+    "-" +
+    pad(this.getDate()) +
+    "T" +
+    pad(this.getHours()) +
+    ":" +
+    pad(this.getMinutes()) +
+    ":" +
+    pad(this.getSeconds()) +
+    dif +
+    pad(tzo / 60) +
+    ":" +
+    pad(tzo % 60)
+  );
+};
+
+var todaysDate = new Date();
+
 class Fourth extends React.Component {
   constructor(props) {
     super(props);
@@ -82,13 +111,15 @@ class Fourth extends React.Component {
         this.setState({ liked: liked, mapstuff: mapstuff });
         // if not found add it the calendar
       } else {
+        console.log(document.getElementById('time').value)
         this.calendar.addEvent({
           id: event._id,
           title: event.name,
           // if the event is a meetup or localfavorite
           start:
+          // if local event splice together
             event.kind === "local"
-              ? new Date().toISOString().slice(0, 10) + event.start
+              ? todaysDate.toIsoString().slice(0, 10) + "T" + document.getElementById('time').value
               : event.start
         });
         this.setState(prevState => ({
@@ -100,6 +131,7 @@ class Fourth extends React.Component {
     }
   }
   componentDidMount() {
+    console.log(todaysDate.toIsoString().slice(0, 10))
     axios({
       method: "put",
       url: "/api/favorites",
@@ -165,7 +197,7 @@ class Fourth extends React.Component {
                     color="white"
                     name={event.name}
                     namecolor="teal-text"
-                    description={event.time}
+                    description={event.kind === "local" ? <input id="time" defaultValue="10:30" type='time' ></input> : event.time}
                     style={{
                       padding: "24px",
                       borderTopColor: "#795548",

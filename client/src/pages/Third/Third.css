@@ -2,3 +2,10 @@
     height: auto !important
 } */
 
+.toast{
+    background-color: teal
+}
+
+.toast-name{
+    font-style: italic
+}
