@@ -41,6 +41,7 @@ class Fourth extends React.Component {
     this.state = {
       event: [],
       liked: [1],
+      calendar: [],
       button: false,
       showingInfoWindow: false,
       activeMarker: {},
@@ -96,22 +97,44 @@ class Fourth extends React.Component {
           return;
           // if there is, remove it from the map
         } else {
-          {
+          
             for (var j = 0; j < mapstuff.length; j++) {
               if (mapstuff[j].id === id) {
                 mapstuff.splice(j, 1);
               }
             }
-          }
+
         }
+        // delete it from user favorites
+        axios({
+          method: "put",
+          url: "http://localhost:5000/api/itinerary/delete",
+          data: {
+            username: sessionStorage.getItem("user"),
+            id: event._id
+          }
+        }).then(
 
         // remove it from the calendar
-        this.calendar.getEventById(event._id).remove();
+        this.calendar.getEventById(event._id).remove(),
 
-        this.setState({ liked: liked, mapstuff: mapstuff });
+        this.setState({ liked: liked, mapstuff: mapstuff }))
+
         // if not found add it the calendar
-      } else {
-        console.log(document.getElementById('time').value)
+        } else {
+        console.log(event._id , id , event.id)
+        axios({
+          method: "put",
+          url: "http://localhost:5000/api/itinerary",
+          data: {
+            username: sessionStorage.getItem("user"),
+            id: event._id,
+            title: event.name,
+            start: event.kind === "local"
+                  ? todaysDate.toIsoString().slice(0, 10) + "T" + document.getElementById('time').value
+                  : event.start
+              }
+        }).then(
         this.calendar.addEvent({
           id: event._id,
           title: event.name,
@@ -121,28 +144,60 @@ class Fourth extends React.Component {
             event.kind === "local"
               ? todaysDate.toIsoString().slice(0, 10) + "T" + document.getElementById('time').value
               : event.start
-        });
+        }),
         this.setState(prevState => ({
           liked: [...prevState.liked, id],
           button: true,
-          mapstuff: [...prevState.mapstuff, map]
-        }));
+          mapstuff: [...prevState.mapstuff, map],
+        })))
+        console.log(this.calendar)
+
       }
     }
   }
   componentDidMount() {
-    console.log(todaysDate.toIsoString().slice(0, 10))
+    // console.log(todaysDate.toIsoString().slice(0, 10))
     axios({
       method: "put",
       url: "http://localhost:5000/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
+      // stores already favorited
+    })
+      .then(res => {
+        console.log(res.data.itinerary)
+        const rememberedFavorites = res.data.itinerary;
+        const liked = [1];
+        const calendar = [];
+        rememberedFavorites.map((activity, index) => {
+          // console.log(activity);
+          liked.push(activity.id);
+          this.calendar.addEvent({
+            id: activity.id,
+            title: activity.title,
+            start: activity.start
+          })
+          // calendar.push({
+          //   id: activity.id,
+          //   title: activity.title,
+          //   start: activity.start
+          //     })
+        });
+        this.setState({ liked });
+        // console.log(liked);
+      }).then(
+    axios({
+      method: "put",
+      url: "http://localhost:5000/api/favorites",
+      data: {
+        username: sessionStorage.getItem("user"),
+      }
     }).then(res => {
       const event = res.data.favorites;
       this.setState({ event });
       console.log(event);
-    });
+    }));
 
     var calendarEl = document.getElementById("calendar"); // grab element reference
 
@@ -159,12 +214,10 @@ class Fourth extends React.Component {
         list: "list"
       },
       columnHeader: false,
-      events: [
-        // other events here...
-      ]
+      events: this.state.calendar
     });
-
     this.calendar.render();
+    console.log(this.calendar)
   }
 
   render() {
