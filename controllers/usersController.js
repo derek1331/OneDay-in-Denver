@@ -32,6 +32,25 @@ module.exports = {
 
 
     },
+    removeItinerary: function (req, res) {
+        db.Users.update({
+                username: req.body.username
+            }, {
+                $pull: {
+                    itinerary: {
+                        id: {
+                            $in: [req.body.id]
+                        }
+                    }
+                }
+            })
+
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+
+
+
+    },
     updateOne: function (req, res) {
         db.Users
             .update({
@@ -62,5 +81,27 @@ module.exports = {
                 username: req.body.username
             }).then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
-    }
+    },
+
+    updateItinerary: function (req, res) {
+        db.Users
+            .update({
+                username: req.body.username
+            }, {
+                $addToSet: {
+                    itinerary: {
+
+                        id: req.body.id,
+                        title: req.body.title,
+                        start: req.body.start
+
+            
+
+                    
+                },
+
+            }})
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+    },
 }
