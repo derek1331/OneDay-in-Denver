@@ -108,7 +108,7 @@ class Fourth extends React.Component {
         // delete it from user favorites
         axios({
           method: "put",
-          url: "http://localhost:5000/api/itinerary/delete",
+          url: "/api/itinerary/delete",
           data: {
             username: sessionStorage.getItem("user"),
             id: event._id
@@ -125,7 +125,7 @@ class Fourth extends React.Component {
         console.log(event._id , id , event.id)
         axios({
           method: "put",
-          url: "http://localhost:5000/api/itinerary",
+          url: "/api/itinerary",
           data: {
             username: sessionStorage.getItem("user"),
             id: event._id,
@@ -189,7 +189,7 @@ class Fourth extends React.Component {
       }).then(
     axios({
       method: "put",
-      url: "http://localhost:5000/api/favorites",
+      url: "/api/favorites",
       data: {
         username: sessionStorage.getItem("user"),
       }
