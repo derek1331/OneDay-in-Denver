@@ -17,8 +17,10 @@ const userSchema = new Schema({
 		time: String,
 		kind: String,
 		id: String
-    }]
-
+	}],
+	itinerary: [{id: String,
+				 title: String,
+				start: String}]
 })
 
 // Define schema methods
