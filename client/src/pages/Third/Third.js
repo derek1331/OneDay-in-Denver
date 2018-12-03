@@ -156,6 +156,14 @@ class Third extends React.Component {
             username: sessionStorage.getItem("user"),
             name: event.name
           }
+        })
+        axios({
+          method: "put",
+          url: "http://localhost:5000/api/itinerary/delete",
+          data: {
+            username: sessionStorage.getItem("user"),
+            id: event.id
+          }
         }).then(
           this.setState({
             liked: liked

@@ -17,6 +17,7 @@ class Second extends React.Component {
   // handles favorite button
   handleChange(id, event) {
     const { liked } = this.state;
+    console.log(event);
 
     if (liked.length >= 1) {
       // if button has already been clicked
@@ -33,6 +34,15 @@ class Second extends React.Component {
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name
+          }
+        });
+
+        axios({
+          method: "put",
+          url: "http://localhost:5000/api/itinerary/delete",
+          data: {
+            username: sessionStorage.getItem("user"),
+            id: event._id
           }
         }).then(this.setState({ liked: liked }));
 
@@ -66,7 +76,7 @@ class Second extends React.Component {
   }
 
   // get all local favorites/activities
-  componentWillMount() {
+  componentDidMount() {
     // searches users favorites to see if they already liked any
     axios({
       method: "put",
@@ -77,14 +87,14 @@ class Second extends React.Component {
       // stores already favorited
     })
       .then(res => {
-        const poop = res.data.favorites;
+        const rememberedFavorites = res.data.favorites;
         const liked = [1];
-        poop.map((activity, index) => {
-          console.log(activity);
+        rememberedFavorites.map((activity, index) => {
+          // console.log(activity);
           liked.push(activity.id);
         });
         this.setState({ liked });
-        console.log(liked);
+        // console.log(liked);
       })
       .then(() => {
         axios({
