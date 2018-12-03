@@ -39,7 +39,7 @@ class Second extends React.Component {
 
         axios({
           method: "put",
-          url: "http://localhost:5000/api/itinerary/delete",
+          url: "/api/itinerary/delete",
           data: {
             username: sessionStorage.getItem("user"),
             id: event._id
