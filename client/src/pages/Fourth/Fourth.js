@@ -82,13 +82,13 @@ class Fourth extends React.Component {
       name: event.name,
       lat: event.lat ? event.lat : "",
       lng: event.long ? event.long : "",
-      id: event._id
+      id: event.id
     };
     if (liked.length >= 1) {
       // if button has already been clicked
-      if (liked.includes(id)) {
+      if (liked.includes(event.id)) {
         for (var i = 0; i < liked.length; i++) {
-          if (liked[i] === id) {
+          if (liked[i] === event.id) {
             liked.splice(i, 1);
           }
         }
@@ -99,7 +99,7 @@ class Fourth extends React.Component {
         } else {
           
             for (var j = 0; j < mapstuff.length; j++) {
-              if (mapstuff[j].id === id) {
+              if (mapstuff[j].id === event.id) {
                 mapstuff.splice(j, 1);
               }
             }
@@ -111,24 +111,24 @@ class Fourth extends React.Component {
           url: "http://localhost:5000/api/itinerary/delete",
           data: {
             username: sessionStorage.getItem("user"),
-            id: event._id
+            id: event.id
           }
         }).then(
 
         // remove it from the calendar
-        this.calendar.getEventById(event._id).remove(),
+        this.calendar.getEventById(event.id).remove(),
 
         this.setState({ liked: liked, mapstuff: mapstuff }))
 
         // if not found add it the calendar
         } else {
-        console.log(event._id , id , event.id)
+
         axios({
           method: "put",
           url: "http://localhost:5000/api/itinerary",
           data: {
             username: sessionStorage.getItem("user"),
-            id: event._id,
+            id: event.id,
             title: event.name,
             start: event.kind === "local"
                   ? todaysDate.toIsoString().slice(0, 10) + "T" + document.getElementById('time').value
@@ -136,7 +136,7 @@ class Fourth extends React.Component {
               }
         }).then(
         this.calendar.addEvent({
-          id: event._id,
+          id: event.id,
           title: event.name,
           // if the event is a meetup or localfavorite
           start:
@@ -146,12 +146,10 @@ class Fourth extends React.Component {
               : event.start
         }),
         this.setState(prevState => ({
-          liked: [...prevState.liked, id],
+          liked: [...prevState.liked, event.id],
           button: true,
           mapstuff: [...prevState.mapstuff, map],
         })))
-        console.log(this.calendar)
-
       }
     }
   }
@@ -169,7 +167,6 @@ class Fourth extends React.Component {
         console.log(res.data.itinerary)
         const rememberedFavorites = res.data.itinerary;
         const liked = [1];
-        const calendar = [];
         rememberedFavorites.map((activity, index) => {
           // console.log(activity);
           liked.push(activity.id);
@@ -178,6 +175,12 @@ class Fourth extends React.Component {
             title: activity.title,
             start: activity.start
           })
+          const poop = this.calendar.getEventSourceById(activity.id)
+
+          console.log(poop)
+
+
+          // get all calendar events by id and if none of them match an it in itinerry remove
           // calendar.push({
           //   id: activity.id,
           //   title: activity.title,
@@ -235,7 +238,7 @@ class Fourth extends React.Component {
             <div className="col s6">
               {/* maps through events */}
               {this.state.event.map((event, index) => {
-                const icon = this.state.liked.includes(event._id) ? (
+                const icon = this.state.liked.includes(event.id) ? (
                   <Icon className="star" small>
                     star
                   </Icon>
