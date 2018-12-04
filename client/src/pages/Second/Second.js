@@ -10,7 +10,7 @@ class Second extends React.Component {
     super(props);
     this.state = {
       activity: [],
-      liked: [1]
+      liked: []
     };
   }
 
@@ -18,19 +18,27 @@ class Second extends React.Component {
   handleChange(id, event) {
     const { liked } = this.state;
     console.log(event);
+    console.log("is" + liked.length)
 
-    if (liked.length >= 1) {
+    // if (typeof liked === "object") {
       // if button has already been clicked
       if (liked.includes(id)) {
-        for (var i = 0; i < liked.length; i++) {
-          if (liked[i] === id) {
-            liked.splice(i, 1);
+        // for (var i = 0; i < liked.length; i++) {
+        //   if (liked[i] === id) {
+        //     liked.splice(i, 1);
+        //   }
+
+        liked.forEach(function(like, index){
+          if (like === id) {
+            liked.splice(index, 1);
+            console.log("ooooo" + liked.length)
           }
-        }
+        })
+        
         // delete it from user favorites
         axios({
           method: "put",
-          url: "http://localhost:5000/api/delete",
+          url: "/api/delete",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name
@@ -39,7 +47,7 @@ class Second extends React.Component {
 
         axios({
           method: "put",
-          url: "http://localhost:5000/api/itinerary/delete",
+          url: "/api/itinerary/delete",
           data: {
             username: sessionStorage.getItem("user"),
             id: event._id
@@ -54,7 +62,7 @@ class Second extends React.Component {
         // add it to user favorites
         axios({
           method: "put",
-          url: "http://localhost:5000/api/users",
+          url: "/api/users",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name,
@@ -71,7 +79,7 @@ class Second extends React.Component {
           })),
           console.log("id" + event._id)
         );
-      }
+      
     }
   }
 
@@ -80,16 +88,17 @@ class Second extends React.Component {
     // searches users favorites to see if they already liked any
     axios({
       method: "put",
-      url: "http://localhost:5000/api/favorites",
+      url: "/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
       // stores already favorited
     })
+    // remembers previous likes
       .then(res => {
         const rememberedFavorites = res.data.favorites;
-        const liked = [1];
-        rememberedFavorites.map((activity, index) => {
+        const liked = [];
+        rememberedFavorites.forEach((activity, index) => {
           // console.log(activity);
           liked.push(activity.id);
         });
@@ -99,7 +108,7 @@ class Second extends React.Component {
       .then(() => {
         axios({
           method: "get",
-          url: "http://localhost:5000/api/events"
+          url: "/api/events"
         }).then(res => {
           const activity = res.data;
           this.setState({ activity });

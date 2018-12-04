@@ -54,7 +54,7 @@ class Third extends React.Component {
     super(props);
     this.state = {
       activity: [],
-      liked: [1],
+      liked: [],
       meetups: [],
       query: todaysDate.toIsoString().slice(0, 10)
     };
@@ -67,7 +67,7 @@ class Third extends React.Component {
     // searches users favorites to see if they already liked any
     axios({
       method: "put",
-      url: "http://localhost:5000/api/favorites",
+      url: "/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
@@ -75,15 +75,15 @@ class Third extends React.Component {
       .then(res => {
         // stores already favorited
         const alreadyFavorited = res.data.favorites;
-        const liked = [1];
+        const liked = [];
         //maps through alreaydyFavorited and pushedes each id to liked array
-        alreadyFavorited.map((activity, index) => {
-          console.log(activity);
+        alreadyFavorited.forEach(function(activity, index) {
+          // console.log(activity);
           liked.push(activity.id);
         });
         // sets state of liked to liked array
         this.setState({ liked });
-        console.log(liked);
+        // console.log(liked);
       })
       .then(() => {
         axios
@@ -140,18 +140,22 @@ class Third extends React.Component {
 
     const { liked } = this.state;
 
-    if (liked.length >= 1) {
+    // if (liked.length >= 1) {
       if (liked.includes(id)) {
-        for (var i = 0; i < liked.length; i++) {
-          // if button has already been clicked
-          if (liked[i] === id) {
-            liked.splice(i, 1);
-          }
-        }
+        // for (var i = 0; i < liked.length; i++) {
+        //   // if button has already been clicked
+        //   if (liked[i] === id) {
+        //     liked.splice(i, 1);
+        //   }
+        // }
+        liked.forEach(function(like, index) { 
+          if (like === id) {
+            liked.splice(index , 1);
+        }})
         // delete meetup from user favorites
         axios({
           method: "put",
-          url: "http://localhost:5000/api/delete",
+          url: "/api/delete",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name
@@ -159,7 +163,7 @@ class Third extends React.Component {
         })
         axios({
           method: "put",
-          url: "http://localhost:5000/api/itinerary/delete",
+          url: "/api/itinerary/delete",
           data: {
             username: sessionStorage.getItem("user"),
             id: event.id
@@ -178,7 +182,7 @@ class Third extends React.Component {
         // add meetup to user favorites
         axios({
           method: "put",
-          url: "http://localhost:5000/api/users",
+          url: "/api/users",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name,
@@ -196,7 +200,7 @@ class Third extends React.Component {
           window.Materialize.toast(`${event.name} has been added`, 900),
           console.log("id" + event.id)
         );
-      }
+      
     }
   }
 
