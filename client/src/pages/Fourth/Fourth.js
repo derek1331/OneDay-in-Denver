@@ -322,5 +322,5 @@ class Fourth extends React.Component {
   }
 }
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyBhNoh-8XLeci7x7IWHfIGXuxcp1djJfq8"
+  apiKey: "proccess.env.REACT_APP_GOOGLE_MAPS_KEY"
 })(Fourth);
