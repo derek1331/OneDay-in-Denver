@@ -18,12 +18,9 @@ class LoginModal extends React.Component {
   //   }
   // };
 
-
   componentDidMount() {
-    
-      document.querySelector(".log").focus();
-     }
-
+    document.querySelector(".log").focus();
+  }
 
   //handles signup
   handleSubmit = event => {
@@ -32,7 +29,7 @@ class LoginModal extends React.Component {
     console.log(this.state.username);
     //request to server here
     axios
-      .post("/api/users", {
+      .post("http://localhost:5000/api/users", {
         username: this.state.username,
         password: this.state.password
       })
@@ -76,7 +73,7 @@ class LoginModal extends React.Component {
     console.log("handleLogin");
     //request to server here
     axios
-      .post("/api/login", {
+      .post("http://localhost:5000/api/login", {
         username: this.state.username,
         password: this.state.password
       })
@@ -126,7 +123,11 @@ class LoginModal extends React.Component {
               placeholder="Email"
               value={this.state.username}
               onChange={this.handleChange}
-              className="log"
+              className="log validate"
+            />
+            <span
+              class="helper-text"
+              data-error="Please enter your email address."
             />
           </div>
         </div>
@@ -139,6 +140,10 @@ class LoginModal extends React.Component {
               placeholder="Password"
               value={this.state.password}
               onChange={this.handleChange}
+            />
+            <span
+              class="helper-text"
+              data-error="Please enter your password."
             />
           </div>
         </div>
@@ -157,6 +162,11 @@ class LoginModal extends React.Component {
               placeholder="Email"
               value={this.state.username}
               onChange={this.handleChange}
+              className="validate"
+            />
+            <span
+              class="helper-text"
+              data-error="Please enter a valid email address."
             />
           </div>
         </div>
@@ -170,6 +180,10 @@ class LoginModal extends React.Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
+            <span
+              class="helper-text"
+              data-error="Please enter a valid password."
+            />
           </div>
         </div>
         <div className="center">
@@ -178,7 +192,7 @@ class LoginModal extends React.Component {
       </div>
     );
     return (
-      <Modal trigger={<Button>Sign Up | Login</Button>} >
+      <Modal trigger={<Button>Sign Up | Login</Button>}>
         <div className="modal-header center-align">
           <img src="https://image.ibb.co/cZsma0/logo.png" alt=" Mountains" />
         </div>

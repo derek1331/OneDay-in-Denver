@@ -96,7 +96,6 @@ class Fourth extends React.Component {
         if (like === event.id) {
           liked.splice(index, 1);
         }
-
       });
       // if there isn't a location for event, return
       if (mapstuff.lat === null) {
@@ -108,7 +107,6 @@ class Fourth extends React.Component {
         //     mapstuff.splice(j, 1);
         //   }
         // }
-
 
         mapstuff.forEach(function(marker, index) {
           if (marker.id === event.id) {
@@ -147,7 +145,6 @@ class Fourth extends React.Component {
         url: "/api/itinerary",
         data: {
           username: sessionStorage.getItem("user"),
-
           id: event.id,
           title: event.name,
           start:
@@ -197,7 +194,7 @@ class Fourth extends React.Component {
     // console.log(todaysDate.toIsoString().slice(0, 10))
     axios({
       method: "put",
-      url: "/api/favorites",
+      url: "http://localhost:5000/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
@@ -210,6 +207,8 @@ class Fourth extends React.Component {
         console.log(rememberedMaps);
         const liked = [];
         const mapstuff = [];
+        const event = res.data.favorites;
+        console.log(event);
 
         // star and itenerary
         rememberedFavorites.forEach((activity, index) => {
@@ -246,23 +245,9 @@ class Fourth extends React.Component {
         //   start: activity.start
         //     })
 
-        this.setState({ liked, mapstuff });
+        this.setState({ liked, mapstuff, event });
         // console.log(liked);
-
       })
-      .then(
-        axios({
-          method: "put",
-          url: "/api/favorites",
-          data: {
-            username: sessionStorage.getItem("user")
-          }
-        }).then(res => {
-          const event = res.data.favorites;
-          this.setState({ event });
-          console.log(event);
-        })
-      );
 
 
     var calendarEl = document.getElementById("calendar"); // grab element reference
@@ -391,5 +376,5 @@ class Fourth extends React.Component {
   }
 }
 export default GoogleApiWrapper({
-  apiKey: `AIzaSyAPnOWsePPWggxzpHDasNMNxy5RXIO-JDw`
+  apiKey: `AIzaSyAzIUbLvB6jFBVzcUt0g4aoBTFv_gTEK20`
 })(Fourth);

@@ -68,7 +68,7 @@ class Third extends React.Component {
     // searches users favorites to see if they already liked any
     axios({
       method: "put",
-      url: "/api/favorites",
+      url: "http://localhost:5000/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
@@ -152,7 +152,6 @@ class Third extends React.Component {
         if (like === id) {
           liked.splice(index, 1);
         }
-
       });
       // delete meetup from user favorites
       axios({
