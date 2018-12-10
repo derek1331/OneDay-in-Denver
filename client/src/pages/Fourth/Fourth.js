@@ -114,10 +114,19 @@ class Fourth extends React.Component {
           }
         });
       }
-      // delete it from user favorites
+      // delete it from itinerary
       axios({
         method: "put",
-        url: "/api/itinerary/delete",
+        url: "http://localhost:5000/api/itinerary/delete",
+        data: {
+          username: sessionStorage.getItem("user"),
+          id: event.id
+        }
+      });
+      // delete it from map
+      axios({
+        method: "put",
+        url: "http://localhost:5000/api/maps/delete",
         data: {
           username: sessionStorage.getItem("user"),
           id: event.id
@@ -133,7 +142,7 @@ class Fourth extends React.Component {
     } else {
       axios({
         method: "put",
-        url: "/api/itinerary",
+        url: "http://localhost:5000/api/itinerary",
         data: {
           username: sessionStorage.getItem("user"),
           id: event.id,
@@ -145,32 +154,47 @@ class Fourth extends React.Component {
                 document.getElementById("time").value
               : event.start
         }
-      }).then(
-        this.calendar.addEvent({
-          id: event.id,
-          title: event.name,
-          // if the event is a meetup or localfavorite
-          start:
-            // if local event splice together
-            event.kind === "local"
-              ? todaysDate.toIsoString().slice(0, 10) +
-                "T" +
-                document.getElementById("time").value
-              : event.start
-        }),
-        this.setState(prevState => ({
-          liked: [...prevState.liked, event.id],
-          button: true,
-          mapstuff: [...prevState.mapstuff, map]
-        }))
-      );
+      })
+        .then(
+          console.log(event.lat),
+          axios({
+            method: "put",
+            url: "http://localhost:5000/api/maps",
+            data: {
+              username: sessionStorage.getItem("user"),
+              id: event.id,
+              name: event.name,
+              lat: event.lat ? event.lat : "",
+              lng: event.long ? event.long : ""
+            }
+          })
+        )
+        .then(
+          this.calendar.addEvent({
+            id: event.id,
+            title: event.name,
+            // if the event is a meetup or localfavorite
+            start:
+              // if local event splice together
+              event.kind === "local"
+                ? todaysDate.toIsoString().slice(0, 10) +
+                  "T" +
+                  document.getElementById("time").value
+                : event.start
+          }),
+          this.setState(prevState => ({
+            liked: [...prevState.liked, event.id],
+            button: true,
+            mapstuff: [...prevState.mapstuff, map]
+          }))
+        );
     }
   }
   componentDidMount() {
     // console.log(todaysDate.toIsoString().slice(0, 10))
     axios({
       method: "put",
-      url: "/api/favorites",
+      url: "http://localhost:5000/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
@@ -179,33 +203,53 @@ class Fourth extends React.Component {
       .then(res => {
         console.log(res.data.itinerary);
         const rememberedFavorites = res.data.itinerary;
+        const rememberedMaps = res.data.map;
+        console.log(rememberedMaps);
         const liked = [];
+        const mapstuff = [];
+
+        // star and itenerary
         rememberedFavorites.forEach((activity, index) => {
           // console.log(activity);
+          // star
           liked.push(activity.id);
+          // calendar
+          // itinerary
           this.calendar.addEvent({
             id: activity.id,
             title: activity.title,
             start: activity.start
           });
-          const mapHelp = this.calendar.getEventSourceById(activity.id);
-
-          console.log(mapHelp);
-
-          // get all calendar events by id and if none of them match an it in itinerry remove
-          // calendar.push({
-          //   id: activity.id,
-          //   title: activity.title,
-          //   start: activity.start
-          //     })
         });
-        this.setState({ liked });
+        // google maps
+        rememberedMaps.forEach((activity, index) => {
+          const savedMap = {
+            id: activity.id,
+            name: activity.name,
+            lat: activity.lat,
+            lng: activity.lng
+          };
+          mapstuff.push(savedMap);
+          console.log(mapstuff);
+        });
+        // const mapHelp = this.calendar.getEventSourceById(activity.id);
+
+        // console.log(mapHelp);
+
+        // get all calendar events by id and if none of them match an it in itinerry remove
+        // calendar.push({
+        //   id: activity.id,
+        //   title: activity.title,
+        //   start: activity.start
+        //     })
+
+        this.setState({ liked, mapstuff });
         // console.log(liked);
       })
       .then(
         axios({
           method: "put",
-          url: "/api/favorites",
+          url: "http://localhost:5000/api/favorites",
           data: {
             username: sessionStorage.getItem("user")
           }
@@ -314,7 +358,7 @@ class Fourth extends React.Component {
                   {this.state.mapstuff.map((event, index) => {
                     return (
                       <Marker
-                        key={event.id}
+                        key={index}
                         onClick={this.onMarkerClick}
                         name={event.name}
                         position={{ lat: event.lat, lng: event.lng }}
@@ -342,5 +386,5 @@ class Fourth extends React.Component {
   }
 }
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyBhNoh-8XLeci7x7IWHfIGXuxcp1djJfq8"
+  apiKey: `AIzaSyAPnOWsePPWggxzpHDasNMNxy5RXIO-JDw`
 })(Fourth);
