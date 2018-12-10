@@ -96,6 +96,7 @@ class Fourth extends React.Component {
         if (like === event.id) {
           liked.splice(index, 1);
         }
+
       });
       // if there isn't a location for event, return
       if (mapstuff.lat === null) {
@@ -107,6 +108,7 @@ class Fourth extends React.Component {
         //     mapstuff.splice(j, 1);
         //   }
         // }
+
 
         mapstuff.forEach(function(marker, index) {
           if (marker.id === event.id) {
@@ -145,6 +147,7 @@ class Fourth extends React.Component {
         url: "http://localhost:5000/api/itinerary",
         data: {
           username: sessionStorage.getItem("user"),
+
           id: event.id,
           title: event.name,
           start:
@@ -194,7 +197,7 @@ class Fourth extends React.Component {
     // console.log(todaysDate.toIsoString().slice(0, 10))
     axios({
       method: "put",
-      url: "http://localhost:5000/api/favorites",
+      url: "/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
@@ -245,6 +248,7 @@ class Fourth extends React.Component {
 
         this.setState({ liked, mapstuff });
         // console.log(liked);
+
       })
       .then(
         axios({
@@ -259,6 +263,7 @@ class Fourth extends React.Component {
           console.log(event);
         })
       );
+
 
     var calendarEl = document.getElementById("calendar"); // grab element reference
 
