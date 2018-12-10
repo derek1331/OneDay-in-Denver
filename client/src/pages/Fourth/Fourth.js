@@ -117,7 +117,7 @@ class Fourth extends React.Component {
       // delete it from itinerary
       axios({
         method: "put",
-        url: "http://localhost:5000/api/itinerary/delete",
+        url: "/api/itinerary/delete",
         data: {
           username: sessionStorage.getItem("user"),
           id: event.id
@@ -126,7 +126,7 @@ class Fourth extends React.Component {
       // delete it from map
       axios({
         method: "put",
-        url: "http://localhost:5000/api/maps/delete",
+        url: "/api/maps/delete",
         data: {
           username: sessionStorage.getItem("user"),
           id: event.id
@@ -142,7 +142,7 @@ class Fourth extends React.Component {
     } else {
       axios({
         method: "put",
-        url: "http://localhost:5000/api/itinerary",
+        url: "/api/itinerary",
         data: {
           username: sessionStorage.getItem("user"),
           id: event.id,
@@ -159,7 +159,7 @@ class Fourth extends React.Component {
           console.log(event.lat),
           axios({
             method: "put",
-            url: "http://localhost:5000/api/maps",
+            url: "/api/maps",
             data: {
               username: sessionStorage.getItem("user"),
               id: event.id,
@@ -248,6 +248,7 @@ class Fourth extends React.Component {
         this.setState({ liked, mapstuff, event });
         // console.log(liked);
       })
+
 
     var calendarEl = document.getElementById("calendar"); // grab element reference
 
