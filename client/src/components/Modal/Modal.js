@@ -29,7 +29,7 @@ class LoginModal extends React.Component {
     console.log(this.state.username);
     //request to server here
     axios
-      .post("http://localhost:5000/api/users", {
+      .post("/api/users", {
         username: this.state.username,
         password: this.state.password
       })
@@ -73,7 +73,7 @@ class LoginModal extends React.Component {
     console.log("handleLogin");
     //request to server here
     axios
-      .post("http://localhost:5000/api/login", {
+      .post("/api/login", {
         username: this.state.username,
         password: this.state.password
       })
