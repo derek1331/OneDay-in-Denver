@@ -6,8 +6,16 @@ mongoose.promise = Promise
 // Define userSchema
 const userSchema = new Schema({
 
-	username: { type: String, unique: true, required: true },
-	password: { type: String, unique: true, required: true },
+	username: {
+		type: String,
+		unique: true,
+		required: true
+	},
+	password: {
+		type: String,
+		unique: true,
+		required: true
+	},
 	favorites: [{
 		name: String,
 		location: Number,
@@ -18,9 +26,18 @@ const userSchema = new Schema({
 		kind: String,
 		id: String
 	}],
-	itinerary: [{id: String,
-				 title: String,
-				start: String}]
+	itinerary: [{
+		id: String,
+		title: String,
+		start: String
+	}],
+	map: [{
+		id: String,
+		name: String,
+		lat: String,
+		lng: String
+
+	}]
 })
 
 // Define schema methods
@@ -40,7 +57,7 @@ userSchema.pre('save', function (next) {
 		next()
 	} else {
 		console.log('models/user.js hashPassword in pre save');
-		
+
 		this.password = this.hashPassword(this.password)
 		next()
 	}

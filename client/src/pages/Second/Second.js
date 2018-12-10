@@ -10,23 +10,30 @@ class Second extends React.Component {
     super(props);
     this.state = {
       activity: [],
-      liked: [1]
+      liked: []
     };
   }
 
   // handles favorite button
   handleChange(id, event) {
     const { liked } = this.state;
-    console.log(event);
 
-    if (liked.length >= 1) {
+
+    // if (typeof liked === "object") {
       // if button has already been clicked
       if (liked.includes(id)) {
-        for (var i = 0; i < liked.length; i++) {
-          if (liked[i] === id) {
-            liked.splice(i, 1);
+        // for (var i = 0; i < liked.length; i++) {
+        //   if (liked[i] === id) {
+        //     liked.splice(i, 1);
+        //   }
+
+        liked.forEach(function(like, index){
+          if (like === id) {
+            liked.splice(index, 1);
+            console.log("ooooo" + liked.length)
           }
-        }
+        })
+        
         // delete it from user favorites
         axios({
           method: "put",
@@ -35,11 +42,20 @@ class Second extends React.Component {
             username: sessionStorage.getItem("user"),
             name: event.name
           }
-        });
-
+        })
+        // delete it from itinerary
         axios({
           method: "put",
           url: "/api/itinerary/delete",
+          data: {
+            username: sessionStorage.getItem("user"),
+            id: event._id
+          }
+        })
+        // delete it from map
+        axios({
+          method: "put",
+          url: "http://localhost:5000/api/maps/delete",
           data: {
             username: sessionStorage.getItem("user"),
             id: event._id
@@ -71,7 +87,7 @@ class Second extends React.Component {
           })),
           console.log("id" + event._id)
         );
-      }
+      
     }
   }
 
@@ -86,10 +102,11 @@ class Second extends React.Component {
       }
       // stores already favorited
     })
+    // remembers previous likes
       .then(res => {
         const rememberedFavorites = res.data.favorites;
-        const liked = [1];
-        rememberedFavorites.map((activity, index) => {
+        const liked = [];
+        rememberedFavorites.forEach((activity, index) => {
           // console.log(activity);
           liked.push(activity.id);
         });

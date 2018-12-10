@@ -35,34 +35,35 @@ var todaysDate = new Date();
 
 // 24hr time to 12hr time
 
-function tConvert (time) {
+function tConvert(time) {
   // Check correct time format and split into components
-  time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+  time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [
+    time
+  ];
 
-  if (time.length > 1) { // If time format correct
-    time = time.slice (1);  // Remove full string match value
-    time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+  if (time.length > 1) {
+    // If time format correct
+    time = time.slice(1); // Remove full string match value
+    time[5] = +time[0] < 12 ? "AM" : "PM"; // Set AM/PM
     time[0] = +time[0] % 12 || 12; // Adjust hours
   }
-  return time.join (''); // return adjusted time or original string
+  return time.join(""); // return adjusted time or original string
 }
-
-
 
 class Third extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       activity: [],
-      liked: [1],
+      liked: [],
       meetups: [],
       query: todaysDate.toIsoString().slice(0, 10)
     };
   }
 
   // get meetups from meetups api
-  componentWillMount() {
-    console.log(todaysDate.toIsoString().slice(0, 10))
+  componentDidMount() {
+    console.log(todaysDate.toIsoString().slice(0, 10));
 
     // searches users favorites to see if they already liked any
     axios({
@@ -75,15 +76,15 @@ class Third extends React.Component {
       .then(res => {
         // stores already favorited
         const alreadyFavorited = res.data.favorites;
-        const liked = [1];
+        const liked = [];
         //maps through alreaydyFavorited and pushedes each id to liked array
-        alreadyFavorited.map((activity, index) => {
-          console.log(activity);
+        alreadyFavorited.forEach(function(activity, index) {
+          // console.log(activity);
           liked.push(activity.id);
         });
         // sets state of liked to liked array
         this.setState({ liked });
-        console.log(liked);
+        // console.log(liked);
       })
       .then(() => {
         axios
@@ -137,66 +138,77 @@ class Third extends React.Component {
 
   // handles favorites Button
   handleChange(id, event) {
-
     const { liked } = this.state;
 
-    if (liked.length >= 1) {
-      if (liked.includes(id)) {
-        for (var i = 0; i < liked.length; i++) {
-          // if button has already been clicked
-          if (liked[i] === id) {
-            liked.splice(i, 1);
-          }
+    // if (liked.length >= 1) {
+    if (liked.includes(id)) {
+      // for (var i = 0; i < liked.length; i++) {
+      //   // if button has already been clicked
+      //   if (liked[i] === id) {
+      //     liked.splice(i, 1);
+      //   }
+      // }
+      liked.forEach(function(like, index) {
+        if (like === id) {
+          liked.splice(index, 1);
         }
-        // delete meetup from user favorites
-        axios({
-          method: "put",
-          url: "/api/delete",
-          data: {
-            username: sessionStorage.getItem("user"),
-            name: event.name
-          }
-        })
-        axios({
-          method: "put",
-          url: "/api/itinerary/delete",
-          data: {
-            username: sessionStorage.getItem("user"),
-            id: event.id
-          }
-        }).then(
-          this.setState({
-            liked: liked
-          }),
-          window.Materialize.toast(`${event.name} has been removed`, 900),
-          // window.Materialize.toast("<p><span class='toast-name'>"+event.name+"</span><span> has been removed</span></p>"),
 
-
-        );
-        // if not found
-      } else {
-        // add meetup to user favorites
-        axios({
-          method: "put",
-          url: "/api/users",
-          data: {
-            username: sessionStorage.getItem("user"),
-            name: event.name,
-            start: `${event.local_date}T${event.local_time}`,
-            lat: event.venue ? event.venue.lat : "",
-            long: event.venue ? event.venue.lon : "",
-            time:   tConvert (event.local_time,),
-            kind: "meetup",
-            id: event.id
-          }
-        }).then(
-          this.setState(prevState => ({
-            liked: [...prevState.liked, event.id]
-          })),
-          window.Materialize.toast(`${event.name} has been added`, 900),
-          console.log("id" + event.id)
-        );
-      }
+      });
+      // delete meetup from user favorites
+      axios({
+        method: "put",
+        url: "http://localhost:5000/api/delete",
+        data: {
+          username: sessionStorage.getItem("user"),
+          name: event.name
+        }
+        // delete it from itinerarry
+      });
+      axios({
+        method: "put",
+        url: "http://localhost:5000/api/itinerary/delete",
+        data: {
+          username: sessionStorage.getItem("user"),
+          id: event.id
+        }
+      });
+      axios({
+        method: "put",
+        url: "http://localhost:5000/api/maps/delete",
+        data: {
+          username: sessionStorage.getItem("user"),
+          id: event.id
+        }
+      }).then(
+        this.setState({
+          liked: liked
+        }),
+        window.Materialize.toast(`${event.name} has been removed`, 900)
+        // window.Materialize.toast("<p><span class='toast-name'>"+event.name+"</span><span> has been removed</span></p>"),
+      );
+      // if not found
+    } else {
+      // add meetup to user favorites
+      axios({
+        method: "put",
+        url: "http://localhost:5000/api/users",
+        data: {
+          username: sessionStorage.getItem("user"),
+          name: event.name,
+          start: `${event.local_date}T${event.local_time}`,
+          lat: event.venue ? event.venue.lat : "",
+          long: event.venue ? event.venue.lon : "",
+          time: tConvert(event.local_time),
+          kind: "meetup",
+          id: event.id
+        }
+      }).then(
+        this.setState(prevState => ({
+          liked: [...prevState.liked, event.id]
+        })),
+        window.Materialize.toast(`${event.name} has been added`, 900),
+        console.log("id" + event.id)
+      );
     }
   }
 

@@ -51,6 +51,25 @@ module.exports = {
 
 
     },
+    removeMaps: function (req, res) {
+        db.Users.update({
+                username: req.body.username
+            }, {
+                $pull: {
+                    map: {
+                        id: {
+                            $in: [req.body.id]
+                        }
+                    }
+                }
+            })
+
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+
+
+
+    },
     updateOne: function (req, res) {
         db.Users
             .update({
@@ -94,6 +113,28 @@ module.exports = {
                         id: req.body.id,
                         title: req.body.title,
                         start: req.body.start
+
+            
+
+                    
+                },
+
+            }})
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+    },
+    updateMaps: function (req, res) {
+        db.Users
+            .update({
+                username: req.body.username
+            }, {
+                $addToSet: {
+                    map: {
+
+                        name: req.body.name,
+                        lat: req.body.lat,
+                        lng: req.body.lng,
+                        id: req.body.id
 
             
 
