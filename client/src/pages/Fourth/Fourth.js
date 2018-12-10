@@ -194,7 +194,7 @@ class Fourth extends React.Component {
     // console.log(todaysDate.toIsoString().slice(0, 10))
     axios({
       method: "put",
-      url: "http://localhost:5000/api/favorites",
+      url: "/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
