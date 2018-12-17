@@ -232,7 +232,7 @@ class Fourth extends React.Component {
 
     axios({
       method: "put",
-      url: "http://localhost:5000/api/delete",
+      url: "/api/delete",
       data: {
         username: sessionStorage.getItem("user"),
         name: activity.name
@@ -242,7 +242,7 @@ class Fourth extends React.Component {
     // delete it from itinerary
     axios({
       method: "put",
-      url: "http://localhost:5000/api/itinerary/delete",
+      url: "/api/itinerary/delete",
       data: {
         username: sessionStorage.getItem("user"),
         id: activity.id
@@ -251,7 +251,7 @@ class Fourth extends React.Component {
     // delete it from map
     axios({
       method: "put",
-      url: "http://localhost:5000/api/maps/delete",
+      url: "/api/maps/delete",
       data: {
         username: sessionStorage.getItem("user"),
         id: activity.id
