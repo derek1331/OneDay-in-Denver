@@ -71,7 +71,15 @@ module.exports = {
 
     },
     updateOne: function (req, res) {
-        db.Users
+        function randomColor(brightness){
+            function randomChannel(brightness){
+              var r = 255-brightness;
+              var n = 0|((Math.random() * r) + brightness);
+              var s = n.toString(16);
+              return (s.length==1) ? '0'+s : s;
+            }
+            return '#' + randomChannel(brightness) + randomChannel(brightness) + randomChannel(brightness);
+          }        db.Users
             .update({
                 username: req.body.username
             }, {
@@ -83,7 +91,8 @@ module.exports = {
                         long: req.body.long,
                         time: req.body.time,
                         kind: req.body.kind,
-                        id: req.body.id
+                        id: req.body.id,
+                        color: randomColor(20)
                         
 
                     }

@@ -1,0 +1,47 @@
+[
+    {
+        "type": "Directory",
+        "name": "c:\\Users\\Derek\\Documents\\My-Repositories\\Tests\\OneDay-in-Denver\\models",
+        "parent_id": null,
+        "fsPath": "c:\\Users\\Derek\\Documents\\My-Repositories\\Tests\\OneDay-in-Denver\\models",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "0Ry1hK3TYOJCbGFI"
+    },
+    {
+        "type": "Directory",
+        "name": "c:\\Users\\Derek\\Documents\\My-Repositories\\Tests\\OneDay-in-Denver\\client\\src\\components\\Modal",
+        "parent_id": null,
+        "fsPath": "c:\\Users\\Derek\\Documents\\My-Repositories\\Tests\\OneDay-in-Denver\\client\\src\\components\\Modal",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "Y8e37VAOhz1qlxGP"
+    },
+    {
+        "type": "Directory",
+        "name": "c:\\Users\\Derek\\Documents\\My-Repositories\\Tests\\OneDay-in-Denver\\client\\src\\pages",
+        "parent_id": null,
+        "fsPath": "c:\\Users\\Derek\\Documents\\My-Repositories\\Tests\\OneDay-in-Denver\\client\\src\\pages",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "MqunWAdS9QcXYHaP"
+    },
+    {
+        "type": "Directory",
+        "name": "c:\\Users\\Derek\\Documents\\My-Repositories\\Tests\\OneDay-in-Denver\\controllers",
+        "parent_id": null,
+        "fsPath": "c:\\Users\\Derek\\Documents\\My-Repositories\\Tests\\OneDay-in-Denver\\controllers",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "RgumsS2H9x81L3hr"
+    },
+    {
+        "type": "Directory",
+        "name": "c:\\Users\\Derek\\Documents\\My-Repositories\\Tests\\OneDay-in-Denver\\routes",
+        "parent_id": null,
+        "fsPath": "c:\\Users\\Derek\\Documents\\My-Repositories\\Tests\\OneDay-in-Denver\\routes",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "dDcCpRnAEqmi5ojl"
+    }
+]
