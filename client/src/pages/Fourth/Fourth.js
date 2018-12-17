@@ -4,7 +4,15 @@ import { Cardy, Cardy4 } from "../../components/Card";
 import axios from "axios-jsonp-pro";
 import { Calendar } from "fullcalendar";
 import { Icon } from "react-materialize";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import {
+  Map,
+  InfoWindow,
+  Marker,
+  GoogleApiWrapper,
+  google
+} from "google-maps-react";
+
+// var pinColor = "FE7569";
 
 // Mountain Time
 Date.prototype.toIsoString = function() {
@@ -82,7 +90,8 @@ class Fourth extends React.Component {
       name: event.name,
       lat: event.lat ? event.lat : "",
       lng: event.long ? event.long : "",
-      id: event.id
+      id: event.id,
+      color: event.color
     };
 
     // if button has already been clicked
@@ -157,6 +166,7 @@ class Fourth extends React.Component {
       })
         .then(
           console.log(event.lat),
+          // add to
           axios({
             method: "put",
             url: "/api/maps",
@@ -165,7 +175,8 @@ class Fourth extends React.Component {
               id: event.id,
               name: event.name,
               lat: event.lat ? event.lat : "",
-              lng: event.long ? event.long : ""
+              lng: event.long ? event.long : "",
+              color: event.color
             }
           })
         )
@@ -190,8 +201,70 @@ class Fourth extends React.Component {
         );
     }
   }
+
+  handleDelete(id, activity) {
+
+    // destructuting
+    const { liked, mapstuff, event } = this.state;
+
+    if (liked.includes(activity.id)) {
+      this.calendar.getEventById(activity.id).remove();
+    }
+
+    // finds and deletes element in event array
+    event.forEach(function(item, index) {
+      if (item.id === activity.id) {
+        event.splice(index, 1);
+      }
+    });
+
+    // if it doesnt have a marker
+    if (mapstuff.lat === null) {
+      return;
+      // if there is, remove it from the map
+    } else {
+      mapstuff.forEach(function(marker, index) {
+        if (marker.id === activity.id) {
+          mapstuff.splice(index, 1);
+        }
+      });
+    }
+
+    axios({
+      method: "put",
+      url: "http://localhost:5000/api/delete",
+      data: {
+        username: sessionStorage.getItem("user"),
+        name: activity.name
+      }
+    });
+
+    // delete it from itinerary
+    axios({
+      method: "put",
+      url: "http://localhost:5000/api/itinerary/delete",
+      data: {
+        username: sessionStorage.getItem("user"),
+        id: activity.id
+      }
+    });
+    // delete it from map
+    axios({
+      method: "put",
+      url: "http://localhost:5000/api/maps/delete",
+      data: {
+        username: sessionStorage.getItem("user"),
+        id: activity.id
+      }
+    }).then(
+      // set state
+      this.setState({ liked, mapstuff, event })
+    );
+  }
+
   componentDidMount() {
     // console.log(todaysDate.toIsoString().slice(0, 10))
+
     axios({
       method: "put",
       url: "/api/favorites",
@@ -199,55 +272,55 @@ class Fourth extends React.Component {
         username: sessionStorage.getItem("user")
       }
       // stores already favorited
-    })
-      .then(res => {
-        console.log(res.data.itinerary);
-        const rememberedFavorites = res.data.itinerary;
-        const rememberedMaps = res.data.map;
-        console.log(rememberedMaps);
-        const liked = [];
-        const mapstuff = [];
-        const event = res.data.favorites;
-        console.log(event);
+    }).then(res => {
+      console.log(res.data.itinerary);
+      const rememberedFavorites = res.data.itinerary;
+      const rememberedMaps = res.data.map;
+      console.log(rememberedMaps);
+      const liked = [];
+      const mapstuff = [];
+      const event = res.data.favorites;
+      console.log(event);
 
-        // star and itenerary
-        rememberedFavorites.forEach((activity, index) => {
-          // console.log(activity);
-          // star
-          liked.push(activity.id);
-          // calendar
-          // itinerary
-          this.calendar.addEvent({
-            id: activity.id,
-            title: activity.title,
-            start: activity.start
-          });
+      // star and itenerary
+      rememberedFavorites.forEach((activity, index) => {
+        // console.log(activity);
+        // star
+        liked.push(activity.id);
+        // calendar
+        // itinerary
+        this.calendar.addEvent({
+          id: activity.id,
+          title: activity.title,
+          start: activity.start
         });
-        // google maps
-        rememberedMaps.forEach((activity, index) => {
-          const savedMap = {
-            id: activity.id,
-            name: activity.name,
-            lat: activity.lat,
-            lng: activity.lng
-          };
-          mapstuff.push(savedMap);
-          console.log(mapstuff);
-        });
-        // const mapHelp = this.calendar.getEventSourceById(activity.id);
+      });
+      // google maps
+      rememberedMaps.forEach((activity, index) => {
+        const savedMap = {
+          id: activity.id,
+          name: activity.name,
+          lat: activity.lat,
+          lng: activity.lng,
+          color: activity.color
+        };
+        mapstuff.push(savedMap);
+        console.log(mapstuff);
+      });
+      // const mapHelp = this.calendar.getEventSourceById(activity.id);
 
-        // console.log(mapHelp);
+      // console.log(mapHelp);
 
-        // get all calendar events by id and if none of them match an it in itinerry remove
-        // calendar.push({
-        //   id: activity.id,
-        //   title: activity.title,
-        //   start: activity.start
-        //     })
+      // get all calendar events by id and if none of them match an it in itinerry remove
+      // calendar.push({
+      //   id: activity.id,
+      //   title: activity.title,
+      //   start: activity.start
+      //     })
 
-        this.setState({ liked, mapstuff, event });
-        // console.log(liked);
-      })
+      this.setState({ liked, mapstuff, event });
+      // console.log(liked);
+    });
 
 
     var calendarEl = document.getElementById("calendar"); // grab element reference
@@ -321,8 +394,20 @@ class Fourth extends React.Component {
                       className="right"
                       key={event._id}
                       onClick={this.handleChange.bind(this, event._id, event)}
+                      // style={{color: event.color}}
                     >
                       {icon}
+                    </a>
+                    <a
+                      id={event._id}
+                      className="right"
+                      key={event._id + 1}
+                      onClick={this.handleDelete.bind(this, event._id, event)}
+                      // style={{color: event.color}}
+                    >
+                      <Icon className="close" small>
+                        close
+                      </Icon>{" "}
                     </a>
                   </Cardy>
                 );
@@ -338,6 +423,7 @@ class Fourth extends React.Component {
                 style={{ width: "1px", height: "500px!important" }}
               >
                 <Map
+                  google={this.props.google}
                   className="google"
                   google={this.props.google}
                   zoom={10}
@@ -346,12 +432,19 @@ class Fourth extends React.Component {
                 >
                   {/* maps through mapstuff :) */}
                   {this.state.mapstuff.map((event, index) => {
+                    // let iconii = Document.createElement("<Icon className='star' small>star</Icon>")
                     return (
                       <Marker
                         key={index}
                         onClick={this.onMarkerClick}
                         name={event.name}
                         position={{ lat: event.lat, lng: event.lng }}
+                        // icon={{
+                        //   url: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"${pinColor}`,
+                        //   scaledSize: new this.props.google.maps.Size(90, 42)
+
+                        // }}
+                        // linecolor= {pinColor}
                       />
                     );
                   })}

@@ -32,7 +32,8 @@ const userSchema = new Schema({
       long: Number,
       time: String,
       kind: String,
-      id: String
+      id: String,
+      color: String
     }
   ],
   itinerary: [
@@ -47,7 +48,8 @@ const userSchema = new Schema({
       id: String,
       name: String,
       lat: String,
-      lng: String
+      lng: String,
+      color: String
     }
   ]
 });
