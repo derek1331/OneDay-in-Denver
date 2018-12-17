@@ -55,7 +55,7 @@ class Second extends React.Component {
         // delete it from map
         axios({
           method: "put",
-          url: "http://localhost:5000/api/maps/delete",
+          url: "/api/maps/delete",
           data: {
             username: sessionStorage.getItem("user"),
             id: event._id
