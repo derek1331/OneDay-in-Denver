@@ -37,7 +37,7 @@ class Second extends React.Component {
         // delete it from user favorites
         axios({
           method: "put",
-          url: "/api/delete",
+          url: "http://localhost:5000/api/delete",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name
@@ -46,7 +46,7 @@ class Second extends React.Component {
         // delete it from itinerary
         axios({
           method: "put",
-          url: "/api/itinerary/delete",
+          url: "http://localhost:5000/api/itinerary/delete",
           data: {
             username: sessionStorage.getItem("user"),
             id: event._id
@@ -55,7 +55,7 @@ class Second extends React.Component {
         // delete it from map
         axios({
           method: "put",
-          url: "/api/maps/delete",
+          url: "http://localhost:5000/api/maps/delete",
           data: {
             username: sessionStorage.getItem("user"),
             id: event._id
@@ -70,7 +70,7 @@ class Second extends React.Component {
         // add it to user favorites
         axios({
           method: "put",
-          url: "/api/users",
+          url: "http://localhost:5000/api/users",
           data: {
             username: sessionStorage.getItem("user"),
             name: event.name,
@@ -96,7 +96,7 @@ class Second extends React.Component {
     // searches users favorites to see if they already liked any
     axios({
       method: "put",
-      url: "/api/favorites",
+      url: "http://localhost:5000/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
@@ -116,7 +116,7 @@ class Second extends React.Component {
       .then(() => {
         axios({
           method: "get",
-          url: "/api/events"
+          url: "http://localhost:5000/api/events"
         }).then(res => {
           const activity = res.data;
           this.setState({ activity });

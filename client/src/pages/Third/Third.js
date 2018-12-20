@@ -62,13 +62,12 @@ class Third extends React.Component {
   }
 
   // get meetups from meetups api
-  componentDidMount() {
-    console.log(todaysDate.toIsoString().slice(0, 10));
+  componentWillMount() {
 
     // searches users favorites to see if they already liked any
     axios({
       method: "put",
-      url: "/api/favorites",
+      url: "http://localhost:5000/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
@@ -95,19 +94,26 @@ class Third extends React.Component {
               this.state.query
             }T00:00:00&page=20&lat=39.739&order=time`
           )
+          // if there are meetups display them if not display noText
           .then(res => {
             const meetups = res.data.events;
+            if (meetups.length > 0) {
             this.setState({
               meetups
-            });
+            })
+          } else {
+            let noMeetups = document.querySelector('.promise');
+            let noText = '<h5 class=\'center\'> Sorry there are no more meetups today </h5>'
+            noMeetups.innerHTML = noText;
+          }
             console.log(res.data.events);
-          });
+          })
       });
   }
 
   renderMeetups = () => {
     let date = document.getElementById("date").value;
-    console.log(date);
+    console.log("Dat: " + date);
     if (date) {
       this.setState(
         {
@@ -124,11 +130,20 @@ class Third extends React.Component {
             )
             .then(res => {
               const meetups = res.data.events;
-              this.setState({
+              // if there are meetups display them if not display noText
+              if(meetups.length > 0) {              
+                this.setState({
                 meetups
-              });
-              console.log(res.data.events);
-            });
+              })
+            } else {
+              let noMeetups = document.querySelector('.promise');
+              let noText = '<h5 class=\'center\'> Sorry there\'re are no more meetups today </h5>'
+              noMeetups.innerHTML = noText;
+            }
+            
+
+              console.log(res.data);
+            }).catch(err => console.log(err))
         }
       );
     } else {
@@ -156,7 +171,7 @@ class Third extends React.Component {
       // delete meetup from user favorites
       axios({
         method: "put",
-        url: "/api/delete",
+        url: "http://localhost:5000/api/delete",
         data: {
           username: sessionStorage.getItem("user"),
           name: event.name
@@ -173,7 +188,7 @@ class Third extends React.Component {
       });
       axios({
         method: "put",
-        url: "/api/maps/delete",
+        url: "http://localhost:5000/api/maps/delete",
         data: {
           username: sessionStorage.getItem("user"),
           id: event.id
@@ -190,7 +205,7 @@ class Third extends React.Component {
       // add meetup to user favorites
       axios({
         method: "put",
-        url: "/api/users",
+        url: "http://localhost:5000/api/users",
         data: {
           username: sessionStorage.getItem("user"),
           name: event.name,
@@ -239,12 +254,12 @@ class Third extends React.Component {
             </div>
           </div>
           <div className="row">
-            <div className="col s12">
+            <div className="col s12 promise">
               {/* maps through meetups */}
               {
                 // if none available
               }{" "}
-              {this.state.meetups.length > 0 ? (
+              {
                 this.state.meetups.map((event, index) => {
                   function doesExist() {
                     if (event.venue) {
@@ -292,11 +307,7 @@ class Third extends React.Component {
                     </Cardy2>
                   );
                 })
-              ) : (
-                <h5 className="center">
-                  Sorry there are no more Meetups today
-                </h5>
-              )}
+               }
             </div>{" "}
           </div>{" "}
         </div>{" "}

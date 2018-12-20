@@ -126,7 +126,7 @@ class Fourth extends React.Component {
       // delete it from itinerary
       axios({
         method: "put",
-        url: "/api/itinerary/delete",
+        url: "http://localhost:5000/api/itinerary/delete",
         data: {
           username: sessionStorage.getItem("user"),
           id: event.id
@@ -135,7 +135,7 @@ class Fourth extends React.Component {
       // delete it from map
       axios({
         method: "put",
-        url: "/api/maps/delete",
+        url: "http://localhost:5000/api/maps/delete",
         data: {
           username: sessionStorage.getItem("user"),
           id: event.id
@@ -151,7 +151,7 @@ class Fourth extends React.Component {
     } else {
       axios({
         method: "put",
-        url: "/api/itinerary",
+        url: "http://localhost:5000/api/itinerary",
         data: {
           username: sessionStorage.getItem("user"),
           id: event.id,
@@ -169,7 +169,7 @@ class Fourth extends React.Component {
           // add to
           axios({
             method: "put",
-            url: "/api/maps",
+            url: "http://localhost:5000/api/maps",
             data: {
               username: sessionStorage.getItem("user"),
               id: event.id,
@@ -232,7 +232,7 @@ class Fourth extends React.Component {
 
     axios({
       method: "put",
-      url: "/api/delete",
+      url: "http://localhost:5000/api/delete",
       data: {
         username: sessionStorage.getItem("user"),
         name: activity.name
@@ -242,7 +242,7 @@ class Fourth extends React.Component {
     // delete it from itinerary
     axios({
       method: "put",
-      url: "/api/itinerary/delete",
+      url: "http://localhost:5000/api/itinerary/delete",
       data: {
         username: sessionStorage.getItem("user"),
         id: activity.id
@@ -251,7 +251,7 @@ class Fourth extends React.Component {
     // delete it from map
     axios({
       method: "put",
-      url: "/api/maps/delete",
+      url: "http://localhost:5000/api/maps/delete",
       data: {
         username: sessionStorage.getItem("user"),
         id: activity.id
@@ -267,7 +267,7 @@ class Fourth extends React.Component {
 
     axios({
       method: "put",
-      url: "/api/favorites",
+      url: "http://localhost:5000/api/favorites",
       data: {
         username: sessionStorage.getItem("user")
       }
