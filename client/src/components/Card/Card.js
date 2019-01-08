@@ -19,6 +19,13 @@ class Cardy extends React.Component {
             <br />
             <span style={{ color: "black", fontWeight: "bold" }}>Time: </span>
             <span>{this.props.description}</span>
+            <br/>
+            <div id="hide-date">
+            <span style={{ color: "black", fontWeight: "bold" }}>Date: </span>
+            <span >{this.props.date}</span>
+
+            </div>
+
           </div>
           <div className="col s1">{this.props.children}</div>
         </div>

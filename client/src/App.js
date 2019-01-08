@@ -7,10 +7,8 @@ import Home from "./pages/Home";
 import Second from "./pages/Second";
 import Third from "./pages/Third";
 import Fourth from "./pages/Fourth";
-import TestModal from "./components/Modal";
-import Collapsed from "./components/Collapsible";
-import Testing from "./pages/Testing";
-import Map from "./pages/Map";
+import { Redirect } from "react-router";
+
 
 class App extends Component {
   state = {
@@ -26,15 +24,21 @@ class App extends Component {
               {this.state.loggedIn ? <Nav /> : <Nav2 />}
             </div>
             <div className="main">
-              <main>
+              <main>{ this.state.loggedIn ?
                 <Switch>
                   <Route exact path="/" component={Home} />
                   <Route exact path="/LocalFavorites" component={Second} />
                   <Route exact path="/Meetups" component={Third} />
                   <Route exact path="/Itinerary" component={Fourth} />
-                  {/* <Route exact path="/testing" component={Testing} /> */}
-                  {/* <Route exact path="/map" component={Map} /> */}
+                    <Redirect from='*' to='/Itinerary' />
+                </Switch> 
+                : 
+                <Switch>
+                  <Route exaxt path="/" component={Home} />
+                  <Redirect  from="*" to='/'/>
+
                 </Switch>
+              }
               </main>
             </div>
           </div>

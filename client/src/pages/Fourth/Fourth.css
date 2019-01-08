@@ -39,3 +39,7 @@
 .google{
     height: unset !important;
 }
+
+.hide{
+    display: none;
+}

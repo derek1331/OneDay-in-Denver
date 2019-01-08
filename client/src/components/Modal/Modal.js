@@ -38,11 +38,14 @@ class LoginModal extends React.Component {
         console.log(response);
         if (response.data) {
           console.log("successful signup");
-          window.location.reload();
+          let overlay = document.querySelector(".modal-overlay");
+          if (overlay) {
+            overlay.remove();
+            this.setState({
+              redirectTo: "/LocalFavorites"
+            });
+          }
 
-          this.setState({
-            redirectTo: "/LocalFavorites"
-          });
         } else {
           console.log("Sign-up error");
         }
@@ -87,11 +90,15 @@ class LoginModal extends React.Component {
           //   loggedIn: true,
           //   email: response.date.username
           // });
-          window.location.reload();
+          let overlay = document.querySelector(".modal-overlay");
+          if (overlay) {
+            overlay.remove();
+            this.setState({
+              redirectTo: "/LocalFavorites"
+            });
+          }
 
-          this.setState({
-            redirectTo: "/LocalFavorites"
-          });
+
         }
       })
       .catch(error => {
@@ -110,7 +117,8 @@ class LoginModal extends React.Component {
 
   render() {
     if (this.state.redirectTo) {
-      return <Redirect to={{ pathname: this.state.redirectTo }} />;
+      return <Redirect to={{ pathname: this.state.redirectTo }} />
+
     }
     const icon = this.state.login ? (
       <div>
@@ -126,7 +134,7 @@ class LoginModal extends React.Component {
               className="log validate"
             />
             <span
-              class="helper-text"
+              className="helper-text"
               data-error="Please enter your email address."
             />
           </div>
@@ -142,7 +150,7 @@ class LoginModal extends React.Component {
               onChange={this.handleChange}
             />
             <span
-              class="helper-text"
+              className="helper-text"
               data-error="Please enter your password."
             />
           </div>
@@ -165,7 +173,7 @@ class LoginModal extends React.Component {
               className="validate"
             />
             <span
-              class="helper-text"
+              className="helper-text"
               data-error="Please enter a valid email address."
             />
           </div>
@@ -181,7 +189,7 @@ class LoginModal extends React.Component {
               onChange={this.handleChange}
             />
             <span
-              class="helper-text"
+              className="helper-text"
               data-error="Please enter a valid password."
             />
           </div>
@@ -192,7 +200,7 @@ class LoginModal extends React.Component {
       </div>
     );
     return (
-      <Modal trigger={<Button>Sign Up | Login</Button>}>
+      <Modal trigger={<Button>Sign Up | Login</Button>} id="signUpModal">
         <div className="modal-header center-align">
           <img src="https://image.ibb.co/cZsma0/logo.png" alt=" Mountains" />
         </div>

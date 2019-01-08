@@ -2,6 +2,8 @@ import React from "react";
 import "./Nav.css";
 import { NavLink } from "react-router-dom";
 import LoginModal from "../Modal";
+import { Redirect } from "react-router";
+
 
 // navbar when logged in
 class Nav extends React.Component {
@@ -9,7 +11,6 @@ class Nav extends React.Component {
   // rough logout--fix
   logout() {
     sessionStorage.clear();
-    window.location.reload();
   }
 
   render() {
