@@ -30,6 +30,7 @@ class LoginModal extends React.Component {
             this.setState({
               redirectTo: "/LocalFavorites"
             });
+            window.location.reload();
           }
 
         } else {
