@@ -12,16 +12,6 @@ class LoginModal extends React.Component {
     login: true
   };
 
-  // focusInput = (component) => {
-  //   if (component) {
-  //     component.focus();
-  //   }
-  // };
-
-  componentDidMount() {
-    document.querySelector(".log").focus();
-  }
-
   //handles signup
   handleSubmit = event => {
     event.preventDefault();
@@ -92,6 +82,7 @@ class LoginModal extends React.Component {
             this.setState({
               redirectTo: "/LocalFavorites"
             });
+            window.location.reload();
           }
 
 
