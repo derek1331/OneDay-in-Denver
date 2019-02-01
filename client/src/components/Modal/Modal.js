@@ -25,8 +25,6 @@ class LoginModal extends React.Component {
   //handles signup
   handleSubmit = event => {
     event.preventDefault();
-    console.log("sign-up-form, email: ");
-    console.log(this.state.username);
     //request to server here
     axios
       .post("/api/users", {
@@ -35,9 +33,7 @@ class LoginModal extends React.Component {
       })
       .then(response => {
         sessionStorage.setItem("user", this.state.username);
-        console.log(response);
         if (response.data) {
-          console.log("successful signup");
           let overlay = document.querySelector(".modal-overlay");
           if (overlay) {
             overlay.remove();
@@ -119,8 +115,8 @@ class LoginModal extends React.Component {
     if (this.state.redirectTo) {
       return <Redirect to={{ pathname: this.state.redirectTo }} />
 
-    }
-    const icon = this.state.login ? (
+    } else {
+      const icon = this.state.login ? (
       <div>
         <div className="row">
           <div className="input-field">
@@ -226,5 +222,7 @@ class LoginModal extends React.Component {
       </Modal>
     );
   }
+    }
+    
 }
 export default LoginModal;
